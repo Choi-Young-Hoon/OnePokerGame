@@ -5,13 +5,13 @@
 namespace ONEPOKER{
 	class PokerCard{
 	public:
-		PokerCard():isOpen(false) {
+		PokerCard():is_open(false) {
 			type = ONEPOKER::CARD_TYPE::CARD_NON_TYPE;
 			win_card = name = ONEPOKER::CARD::CARD_NON;
 		}
 		~PokerCard(){}
 
-		inline void setCard(enum ONEPOKER::CARD_TYPE type
+		inline void SetCard(enum ONEPOKER::CARD_TYPE type
 				, enum ONEPOKER::CARD name
 				, enum ONEPOKER::CARD win){
 			this->type = type;
@@ -19,19 +19,19 @@ namespace ONEPOKER{
 			this->win_card = win;
 		}
 		
-		enum ONEPOKER::GAME check_win(const PokerCard & card);
+		enum ONEPOKER::GAME CheckWin(const PokerCard & card);
 
-		inline void setOpenCard(){ isOpen = true; }
-		inline void setCloseCard(){ isOpen = false; }
-		inline enum ONEPOKER::CARD_TYPE getType(){ return type; }
-		inline enum ONEPOKER::CARD getName(){ return name; }
-		inline enum ONEPOKER::CARD getWinCard(){ return win_card; }
-		inline bool IsOpen(){ return isOpen; }
+		inline void SetOpenCard(){ is_open = true; }
+		inline void SetCloseCard(){ is_open = false; }
+		inline enum ONEPOKER::CARD_TYPE GetType(){ return type; }
+		inline enum ONEPOKER::CARD GetName(){ return name; }
+		inline enum ONEPOKER::CARD GetWinCard(){ return win_card; }
+		inline bool IsOpen(){ return is_open; }
 	private:
 		enum ONEPOKER::CARD_TYPE type;	//Up, Down flag
 		enum ONEPOKER::CARD name;	//카드 종류
 		enum ONEPOKER::CARD win_card;	//이길 수 있는 카드
-		bool isOpen;	//open 된 카드인지.
+		bool is_open;	//open 된 카드인지.
 	};
 };
 #endif

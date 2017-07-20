@@ -11,35 +11,39 @@ using namespace std;
 namespace ONEPOKER{
 	class PokerUser : public OnePokerDefault {
 	public:
-		PokerUser():openCardIndex(CARD_INDEX::CARD_NON_SELECT){}
+		PokerUser():open_card_index(CARD_INDEX::CARD_NON_SELECT){}
 		~PokerUser(){}
 		
-		inline void setUserData(UserData data){ myData = data; }
-		inline void setOpenCard(enum CARD_INDEX index){
-			cardList[index].setOpenCard();
-			openCardIndex = index;
+		inline void SetUserData(UserData data){ my_data = data; }
+		inline void SetOpenCard(enum CARD_INDEX index){
+			card_list[index].SetOpenCard();
+			open_card_index = index;
 		}
-		inline bool addCard(const PokerCard & card){
-			if(OnePokerDefault::MAX_CARD <= cardList.size())
+		inline bool AddCard(const PokerCard & card){
+			if(OnePokerDefault::MAX_CARD <= card_list.size())
 				return false;
-			cardList.push_back(card);
+			card_list.push_back(card);
 			return true;
 		}
-		inline UserData * getUserData(){ return &myData; }
-		inline PokerCard * getOpenCard(){
-			if(openCardIndex != CARD_INDEX::CARD_NON_SELECT)
-				return &cardList[openCardIndex];
+		inline UserData * GetUserData(){ return &my_data; }
+		inline PokerCard * GetOpenCard(){
+			if(open_card_index != CARD_INDEX::CARD_NON_SELECT)
+				return &card_list[open_card_index];
 			return NULL;
 		}
-		inline PokerCard * getCard(enum CARD_INDEX index){
-			if(index < cardList.size())
-				return &cardList[index];
+		inline PokerCard * GetCard(enum CARD_INDEX index){
+			if(index < card_list.size())
+				return &card_list[index];
 			return NULL;
+		}
+		inline void CardClear(){
+			card_list.clear();
+			open_card_index = CARD_INDEX::CARD_NON_SELECT;
 		}
 	private:
-		vector<PokerCard> cardList;
-		enum CARD_INDEX openCardIndex;
-		UserData myData;
+		vector<PokerCard> card_list;
+		enum CARD_INDEX open_card_index;
+		UserData my_data;
 	};
 };
 #endif

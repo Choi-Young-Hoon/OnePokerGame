@@ -6,14 +6,14 @@ using namespace std;
 using namespace ONEPOKER;
 
 int main(void){
-	if(DataBase::db_connect("127.0.0.1", "root", "950214")
+	if(DataBase::Connect("127.0.0.1", "root", "950214")
 			== OP_ERROR_FLAG::DB_CONNECT_ERROR)
 		return -1;
 
 	string str, str2;
 	vector<string> data;
 	int select;
-	bool successFlag;
+	bool success_flag;
 	AccessLog log;
 	while(1){
 		cout << "======= AccessLog =======" << endl;
@@ -24,10 +24,10 @@ int main(void){
 
 		if(select == 1){
 			cout << "ip : "; cin >> str2;
-			successFlag = log.write_log(str, str2);
+			success_flag = log.WriteLog(str, str2);
 		} else if(select == 2){
-			successFlag = log.get_log(str);
-			while(successFlag && log.get_data(&data)){
+			success_flag = log.GetLog(str);
+			while(success_flag && log.GetData(&data)){
 				for(auto & iter : data)
 					cout << iter << " ";
 				cout << endl;
@@ -35,14 +35,14 @@ int main(void){
 		}
 		else
 			break;
-		if(successFlag)
+		if(success_flag)
 			cout << "Success" << endl;
 		else
 			cout << "Failed" << endl;
-		successFlag = false;
+		success_flag = false;
 	}
 
 
-	DataBase::db_close();
+	DataBase::Close();
 	return 0;
 }

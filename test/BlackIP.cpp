@@ -5,14 +5,14 @@ using namespace std;
 using namespace ONEPOKER;
 
 int main(void){
-	if(DataBase::db_connect("127.0.0.1", "root", "950214")
+	if(DataBase::Connect("127.0.0.1", "root", "950214")
 			== OP_ERROR_FLAG::DB_CONNECT_ERROR)
 		return -1;
 	
 	string str;
-	bool successFlag;
+	bool success_flag;
 	int select;
-	BlackIP * inst = BlackIP::getInstance();
+	BlackIP * inst = BlackIP::GetInstance();
 	
 	while(1){
 		cout << "======= BlackIP =======" << endl;
@@ -23,17 +23,17 @@ int main(void){
 		cout << "ip : "; cin >> str;
 
 		if(select == 1)
-			successFlag = inst->insert(str, "Test Data");
+			success_flag = inst->Insert(str, "Test Data");
 		else if(select == 2)
-			successFlag = inst->search(str);
+			success_flag = inst->Search(str);
 		else if(select == 3)
-			successFlag = inst->remove(str);
+			success_flag = inst->Remove(str);
 		else
 			break;
 		
-		cout << ((successFlag) ? "Success" : "Failed") << endl;
-		successFlag = false;
+		cout << ((success_flag) ? "Success" : "Failed") << endl;
+		success_flag = false;
 	}
-	DataBase::db_close();
+	DataBase::Close();
 	return 0;
 }

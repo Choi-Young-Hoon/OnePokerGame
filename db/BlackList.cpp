@@ -6,11 +6,11 @@ using namespace ONEPOKER;
 BlackIP * BlackIP::instance = NULL;
 BlackUser * BlackUser::instance = NULL;
 
-bool BlackList::search(string info){
-	if(DataBase::db_query_run(searchQuery(info))){
-		if(DataBase::db_get_result()){
-			if(DataBase::db_get_row()){
-				DataBase::db_free_data();
+bool BlackList::Search(string info){
+	if(DataBase::QueryRun(SearchQuery(info))){
+		if(DataBase::GetResult()){
+			if(DataBase::GetRow()){
+				DataBase::FreeData();
 				return true;
 			}
 		}
@@ -18,19 +18,19 @@ bool BlackList::search(string info){
 	return false;
 }
 
-bool BlackList::insert(string info, string reason){
-	if(DataBase::db_query_run(insertQuery(info, reason)))
+bool BlackList::Insert(string info, string reason){
+	if(DataBase::QueryRun(InsertQuery(info, reason)))
 		return true;
 	return false;
 }
 
-bool BlackList::remove(string info){
-	if(DataBase::db_query_run(removeQuery(info)))
+bool BlackList::Remove(string info){
+	if(DataBase::QueryRun(RemoveQuery(info)))
 		return true;
 	return false;
 }
 
-string & BlackIP::searchQuery(string & info){
+string & BlackIP::SearchQuery(string & info){
 	query = "SELECT * FROM OP_BLACK_IP_TB WHERE ip = '" + info + "'";
 #ifdef ONEPOKER_DEBUG
 	cout << "BlackIP search query : " << query << endl;
@@ -38,10 +38,10 @@ string & BlackIP::searchQuery(string & info){
 	return query;
 }
 
-string & BlackIP::insertQuery(string & info, string & reason){
+string & BlackIP::InsertQuery(string & info, string & reason){
 	query = "INSERT INTO OP_BLACK_IP_TB VALUES(";
 	query += "\"" + info + "\"";
-	query += ",\"" + get_time_yyyymmdd() + "\"";
+	query += ",\"" + GetTimeyyyymmdd() + "\"";
 	query += ",\"" + reason + "\")";
 #ifdef ONEPOKER_DEBUG
 	cout << "BlackIP insert query : " << query << endl;
@@ -49,7 +49,7 @@ string & BlackIP::insertQuery(string & info, string & reason){
 	return query;
 }
 
-string & BlackIP::removeQuery(string & info){
+string & BlackIP::RemoveQuery(string & info){
 	query = "DELETE FROM OP_BLACK_IP_TB WHERE ip = \"" + info + "\"";
 #ifdef ONEPOKER_DEBUG
 	cout << "BlackIP remove query : " << query << endl;
@@ -57,7 +57,7 @@ string & BlackIP::removeQuery(string & info){
 	return query;
 }
 
-string & BlackUser::searchQuery(string & info){
+string & BlackUser::SearchQuery(string & info){
 	query = "SELECT user_num FROM OP_BLACK_USER_TB WHERE user_num = ";
 	query+= "(SELECT user_num FROM OP_USER_TB WHERE id = '" + info + "')";
 #ifdef ONEPOKER_DEBUG
@@ -65,10 +65,10 @@ string & BlackUser::searchQuery(string & info){
 #endif
 	return query;
 }
-string & BlackUser::insertQuery(string & info, string & reason){
+string & BlackUser::InsertQuery(string & info, string & reason){
 	query = "INSERT INTO OP_BLACK_USER_TB VALUES(";
 	query+= "(SELECT user_num FROM OP_USER_TB WHERE id = '" + info +"')";
-	query+= ",'" + get_time_yyyymmdd() + "'";
+	query+= ",'" + GetTimeyyyymmdd() + "'";
 	query+= ",'" + reason + "')";
 #ifdef ONEPOKER_DEBUG
 	cout << "BlackUser insert query : " << query << endl;
@@ -76,7 +76,7 @@ string & BlackUser::insertQuery(string & info, string & reason){
 	return query;
 }
 
-string & BlackUser::removeQuery(string & info){
+string & BlackUser::RemoveQuery(string & info){
 	query = "DELETE FROM OP_BLACK_USER_TB WHERE user_num = (SELECT user_num FROM OP_USER_TB WHERE id = '" + info + "')";
 #ifdef ONEPOKER_DEBUG
 	cout << "BlackUser remove query : " << info << endl;

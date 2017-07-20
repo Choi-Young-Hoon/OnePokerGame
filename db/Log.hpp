@@ -14,26 +14,26 @@ namespace ONEPOKER{
 		Log(){}
 		virtual ~Log(){}
 
-		bool get_data(vector<string> * data){
-			return DataBase::db_get_data(data, 
-					DataBase::db_get_field_count());
+		bool GetData(vector<string> * data){
+			return DataBase::GetData(data, 
+					DataBase::GetFieldCount());
 		}
 
-		bool get_log(string user){
-			if(DataBase::db_query_run(getQuery(user)))
-				if(DataBase::db_get_result())
+		bool GetLog(string user){
+			if(DataBase::QueryRun(GetQuery(user)))
+				if(DataBase::GetResult())
 					return true;
 			return false;
 		}
 
-		bool write_log(ARGS ... arg){
-			if(DataBase::db_query_run(writeQuery(arg...)))
+		bool WriteLog(ARGS ... arg){
+			if(DataBase::QueryRun(WriteQuery(arg...)))
 				return true;
 			return false;
 		}
 		
-		virtual string & getQuery(string & user) = 0;
-		virtual string & writeQuery(ARGS ... arg) = 0;
+		virtual string & GetQuery(string & user) = 0;
+		virtual string & WriteQuery(ARGS ... arg) = 0;
 	};
 
 	class MatchLog : public Log<string&, string&, enum ONEPOKER::PLAYER> {
@@ -41,8 +41,8 @@ namespace ONEPOKER{
 		MatchLog():Log<string&, string&, enum ONEPOKER::PLAYER>(){}
 		virtual ~MatchLog(){}
 
-		virtual string & getQuery(string & user);
-		virtual string & writeQuery(string & user1, string & user2
+		virtual string & GetQuery(string & user);
+		virtual string & WriteQuery(string & user1, string & user2
 				, enum ONEPOKER::PLAYER winner);
 	private:
 		string query;
@@ -52,8 +52,8 @@ namespace ONEPOKER{
 	public:
 		AccessLog():Log<string&, string&>(){}
 		virtual ~AccessLog(){}
-		virtual string & getQuery(string & user);
-		virtual string & writeQuery(string & user, string & ip);
+		virtual string & GetQuery(string & user);
+		virtual string & WriteQuery(string & user, string & ip);
 	private:
 		string query;
 	};

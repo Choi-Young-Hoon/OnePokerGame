@@ -7,13 +7,13 @@ using namespace std;
 using namespace ONEPOKER;
 
 int main(void){
-	if(DataBase::db_connect("127.0.0.1", "root", "950214")
+	if(DataBase::Connect("127.0.0.1", "root", "950214")
 			== OP_ERROR_FLAG::DB_CONNECT_ERROR)
 		return -1;
 
 	string str, str2;
 	vector<string> data;
-	bool successFlag;
+	bool success_flag;
 	int select;
 	MatchLog log;
 	while(1){
@@ -26,11 +26,11 @@ int main(void){
 		if(select == 1){ //Insert
 			cout << "id2 : "; cin >> str2;
 			cout << "Whos Win(1.Player1 2.Player2) : "; cin >> select;
-			successFlag = log.write_log(str, str2,
-				(select > 1) ? PLAYER::PLAYER1 : PLAYER::PLAYER2);
+			success_flag = log.WriteLog(str, str2,
+				(select > 1) ? PLAYER::PLAYER_1 : PLAYER::PLAYER_2);
 		} else if(select == 2){//Search
-			successFlag = log.get_log(str);
-			while(successFlag && log.get_data(&data)){
+			success_flag = log.GetLog(str);
+			while(success_flag && log.GetData(&data)){
 				for(auto & iter : data)
 					cout << iter << " ";
 				cout << endl;
@@ -38,11 +38,11 @@ int main(void){
 		} else
 			break;
 
-		if(successFlag)
+		if(success_flag)
 			cout << "Success" << endl;
 		else
 			cout << "Failed" << endl;
-		successFlag = false;
+		success_flag = false;
 	}
 	return 0;
 }

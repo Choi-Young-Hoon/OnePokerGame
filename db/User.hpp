@@ -13,39 +13,39 @@ namespace ONEPOKER{
 		~UserData(){}
 
 		//Setter
-		inline void setData(string pwd, string email){
-			userPwd = pwd;
-			userEmail = email;
+		inline void SetData(string pwd, string email){
+			user_pwd = pwd;
+			user_email = email;
 		}
-		inline void setStat(int money, bool win){
-			userMoney += money;
-			(win) ? userWin++ : userLose++;
+		inline void SetStat(int money, bool win){
+			user_money += money;
+			(win) ? user_win++ : user_lose++;
 		}
-		inline void setRecentDate(string date){
-			userRecentAccessDate = date;
+		inline void SetRecentDate(string date){
+			user_recent_access_date = date;
 		}
 		//Getter
-		inline int getNum(){ return userNum; }
-		inline string & getId(){ return userEmail; }
-		inline string & getPwd(){ return userPwd; }
-		inline string & getEmail(){ return userEmail; }
-		inline string & getAccessDate(){ return userRecentAccessDate; }
-		inline bool IsCert(){ return userEmailCert; }
-		inline int getMoney(){ return userMoney; }
-		inline int getWin(){ return userWin; }
-		inline int getLose(){ return userLose; }
+		inline int GetNum(){ return user_num; }
+		inline string & GetId(){ return user_email; }
+		inline string & GetPwd(){ return user_pwd; }
+		inline string & GetEmail(){ return user_email; }
+		inline string & GetAccessDate(){ return user_recent_access_date; }
+		inline bool IsCert(){ return user_email_cert; }
+		inline int GetMoney(){ return user_money; }
+		inline int GetWin(){ return user_win; }
+		inline int GetLose(){ return user_lose; }
 
 		friend class User;
 	private:
-		int userNum;
-		string userId;
-		string userPwd;
-		string userEmail;
-		string userRecentAccessDate;
-		bool userEmailCert;
-		int userMoney;
-		int userWin;
-		int userLose;
+		int user_num;
+		string user_id;
+		string user_pwd;
+		string user_email;
+		string user_recent_access_date;
+		bool user_email_cert;
+		int user_money;
+		int user_win;
+		int user_lose;
 	};
 
 	class User : public DataBase {
@@ -53,11 +53,11 @@ namespace ONEPOKER{
 		User(){}
 		~User(){}
 
-		bool insert(string id, string pwd, string email);
-		bool remove(UserData & userInfo);
-		void set_data(UserData * userInfo, vector<string> & data);
-		bool search(string id, string pwd, UserData * userInfo);
-		bool update(UserData * userInfo);
+		bool Insert(string id, string pwd, string email);
+		bool Remove(UserData & user_info);
+		void SetData(UserData * user_info, vector<string> & data);
+		bool Search(string id, string pwd, UserData * user_info);
+		bool Update(UserData * user_info);
 
 		friend class UserData;
 	private:

@@ -6,7 +6,7 @@ using namespace ONEPOKER;
 
 MYSQL DataBase::db;
 
-enum ONEPOKER::OP_ERROR_FLAG DataBase::db_connect(string ip, string user, string pwd){
+enum ONEPOKER::OP_ERROR_FLAG DataBase::Connect(string ip, string user, string pwd){
 	
 	mysql_init(&db);
 
@@ -16,11 +16,11 @@ enum ONEPOKER::OP_ERROR_FLAG DataBase::db_connect(string ip, string user, string
 	return OP_ERROR_FLAG::DB_CONNECT_SUCCESS;
 }
 
-void DataBase::db_close(){
+void DataBase::Close(){
 	mysql_close(&db);
 }
 
-bool DataBase::db_query_run(string & query){
+bool DataBase::QueryRun(string & query){
 #ifdef ONEPOKER_DEBUG
 	cout << "DataBase db_query_run() : " << query << endl;
 #endif
@@ -29,24 +29,24 @@ bool DataBase::db_query_run(string & query){
 	return true;
 }
 
-bool DataBase::db_get_result(){
-	dbResult = mysql_store_result(&db);
-	if(!dbResult){ //반환 결과가 없으면
-		mysql_free_result(dbResult);
+bool DataBase::GetResult(){
+	db_result = mysql_store_result(&db);
+	if(!db_result){ //반환 결과가 없으면
+		mysql_free_result(db_result);
 		return false;
 	}
 	return true;
 }
 
-bool DataBase::db_get_data(vector<string> * data, int fieldCount){
+bool DataBase::GetData(vector<string> * data, int field_count){
 	(*data).clear();
-	dbData = mysql_fetch_row(dbResult);
-	if(!dbData){
-		mysql_free_result(dbResult);
+	db_data = mysql_fetch_row(db_result);
+	if(!db_data){
+		mysql_free_result(db_result);
 		return false;
 	}
 	
-	for(int i = 0; i < fieldCount; i++)
-		(*data).push_back(dbData[i]);
+	for(int i = 0; i < field_count; i++)
+		(*data).push_back(db_data[i]);
 	return true;
 }

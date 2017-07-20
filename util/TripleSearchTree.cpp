@@ -6,37 +6,37 @@ using namespace std;
 using namespace ONEPOKER;
 
 
-bool TripleSearchTree::insert(const char * data, int type){
+bool TripleSearchTree::Insert(const char * data, int type){
 	Node ** node = &root;
-	bool endFlag = false;
+	bool end_flag = false;
 #ifdef ONEPOKER_DEBUG
 	cout << "TripleSearchTree Insert(" << data << ") : ";
 #endif
 	while(*data != '\0'){
-		endFlag = (*(data + 1) == '\0') ? true : false;
+		end_flag = (*(data + 1) == '\0') ? true : false;
 		if( (*node) == NULL){
 #ifdef ONEPOKER_DEBUG
 			cout << *data << " ";
 #endif
-			*node = makeNode(*data, type, endFlag);
-			nodeCount++;
-		} else if(*data < (*node)->getData()){
+			*node = MakeNode(*data, type, end_flag);
+			node_count++;
+		} else if(*data < (*node)->GetData()){
 			node = &((*node)->left);
-		} else if(*data == (*node)->getData()){
+		} else if(*data == (*node)->GetData()){
 			node = &((*node)->down);
 			data++;
 		} else {
 			node = &((*node)->right);
 		}
 	}
-	dataCount++;
+	data_count++;
 #ifdef ONEPOKER_DEBUG
 	cout << "Finish" << endl;
 #endif
 	return true;
 }
 
-int TripleSearchTree::search(const char * data){
+int TripleSearchTree::Search(const char * data){
 	Node * node = root;
 #ifdef ONEPOKER_DEBUG
 	cout << "TripleSearchTree search(" << data << ") : ";
@@ -44,17 +44,17 @@ int TripleSearchTree::search(const char * data){
 	while(*data != '\0'){
 		if(node == NULL)
 			break;
-		else if(*data < node->getData()){
+		else if(*data < node->GetData()){
 			node = node->left;
-		} else if(*data == node->getData()){
+		} else if(*data == node->GetData()){
 #ifdef ONEPOKER_DEBUG
 			cout << *data << " ";
 #endif
-			if( (*(data+1) == '\0') && node->checkEnd() ){
+			if( (*(data+1) == '\0') && node->CheckEnd() ){
 #ifdef ONEPOKER_DEBUG
 				cout << endl;
 #endif
-				return node->getType();
+				return node->GetType();
 			}
 			node = node->down;
 			data++;
@@ -67,19 +67,19 @@ int TripleSearchTree::search(const char * data){
 	return -1;
 }
 
-void TripleSearchTree::clear(){
+void TripleSearchTree::Clear(){
 	Node * node = root;
 	Node * temp = NULL;
 	stack<Node*> temp_node;
 #ifdef ONEPOKER_DEBUG
 	cout << "TripleSearchTree clear() : nodeCount temp_node.size()" << endl;
 #endif
-	while(nodeCount){
+	while(node_count){
 		temp = node;
 		temp_node.push(node);
 
 #ifdef ONEPOKER_DEBUG
-		cout << node->getData() << " ";
+		cout << node->GetData() << " ";
 #endif
 		if(node->left != NULL){
 			node = node->left;
@@ -92,18 +92,18 @@ void TripleSearchTree::clear(){
 			temp->right = NULL;
 		} else {
 #ifdef ONEPOKER_DEBUG
-			cout << endl << "delete before: " << nodeCount << " "; 
+			cout << endl << "delete before: " << node_count << " "; 
 			cout << temp_node.size() << "\tdelete node: ";
-			cout << node->getData() << " ";
+			cout << node->GetData() << " ";
 			cout << static_cast<void*>(node) << "\t"; 
 #endif
 			delete node;
 			temp_node.pop();
 			node = temp_node.top();
 			temp_node.pop();
-			nodeCount--;
+			node_count--;
 #ifdef ONEPOKER_DEBUG
-			cout << "delete after: " << nodeCount << " ";
+			cout << "delete after: " << node_count << " ";
 			cout << temp_node.size() << endl;
 #endif
 			/*
@@ -112,7 +112,7 @@ void TripleSearchTree::clear(){
 			 * 위의 else if 구문에서 세그먼테이션 오류가나
 			 * 잠시 하드코딩.
 			 */
-			if(nodeCount == 1){
+			if(node_count == 1){
 				delete root;
 				break;
 			}

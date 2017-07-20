@@ -7,17 +7,17 @@ using namespace std;
 namespace ONEPOKER{
 	class TripleSearchTree{
 	public:
-		TripleSearchTree(): root(NULL), dataCount(0), nodeCount(0){}
+		TripleSearchTree(): root(NULL), data_count(0), node_count(0){}
 		~TripleSearchTree(){
 			if(root != NULL)
-				clear();
+				Clear();
 		}
 
-		bool insert(const char * data, int type);
-		int search(const char * data);
-		void clear();
-		inline void setNodeType(int type){ this->nodeType = type; }
-		inline int getNodeType(){ return nodeType; }
+		bool Insert(const char * data, int type);
+		int Search(const char * data);
+		void Clear();
+		inline void SetNodeType(int type){ this->node_type = type; }
+		inline int GetNodeType(){ return node_type; }
 	private:
 
 
@@ -25,34 +25,34 @@ namespace ONEPOKER{
 		public:
 			Node():type(0){
 				right = left = down = NULL;
-				endFlag = false;
+				end_flag = false;
 			}
 			~Node(){}
-			inline void setNodeData(char data, int type, bool endFlag){
+			inline void SetNodeData(char data, int type, bool end_flag){
 				this->data = data;
 				this->type |= type;
-				this->endFlag = endFlag;
+				this->end_flag = end_flag;
 			}
-			inline char getData(){ return data; }
-			inline int getType(){ return type; }
-			inline bool checkEnd(){ return endFlag; }
+			inline char GetData(){ return data; }
+			inline int GetType(){ return type; }
+			inline bool CheckEnd(){ return end_flag; }
 			
 			Node * right, * left, * down;
 		private:
 			char data;
 			int type;
-			bool endFlag;
+			bool end_flag;
 		};
 		Node * root;
-		inline Node * makeNode(const char data, int type, bool endFlag){
+		inline Node * MakeNode(const char data, int type, bool end_flag){
 			Node * node = new Node();
-			node->setNodeData(data, type, endFlag);
+			node->SetNodeData(data, type, end_flag);
 			return node;
 		}
 
-		int nodeType;
-		int dataCount;
-		int nodeCount;
+		int node_type;
+		int data_count;
+		int node_count;
 	};
 };
 #endif

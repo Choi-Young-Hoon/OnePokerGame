@@ -12,13 +12,13 @@ namespace ONEPOKER{
 	public:
 		BlackList(){}
 		virtual ~BlackList(){}
-		bool search(string info);
-		bool insert(string info, string reason);
-		bool remove(string info);
+		bool Search(string info);
+		bool Insert(string info, string reason);
+		bool Remove(string info);
 
-		virtual string & searchQuery(string & info) = 0;
-		virtual string & insertQuery(string & info, string & reason) = 0;
-		virtual string & removeQuery(string & info) = 0;
+		virtual string & SearchQuery(string & info) = 0;
+		virtual string & InsertQuery(string & info, string & reason) = 0;
+		virtual string & RemoveQuery(string & info) = 0;
 	};
 
 	class BlackIP : public BlackList {
@@ -27,14 +27,14 @@ namespace ONEPOKER{
 			if(instance)
 				delete instance;
 		}
-		static inline BlackIP * getInstance(){
+		static inline BlackIP * GetInstance(){
 			if(!instance)
 				instance = new BlackIP();
 			return instance;
 		}
-		virtual string & searchQuery(string & info);
-		virtual string & insertQuery(string & info, string & reason);
-		virtual string & removeQuery(string & info);
+		virtual string & SearchQuery(string & info);
+		virtual string & InsertQuery(string & info, string & reason);
+		virtual string & RemoveQuery(string & info);
 	private:
 		BlackIP(){}
 		static BlackIP * instance;
@@ -48,14 +48,14 @@ namespace ONEPOKER{
 			if(instance)
 				delete instance;
 		}
-		static inline BlackUser * getInstance(){
+		static inline BlackUser * GetInstance(){
 			if(!instance)
 				instance = new BlackUser();
 			return instance;
 		}
-		virtual string & searchQuery(string & info);
-		virtual string & insertQuery(string & info, string & reason);
-		virtual string & removeQuery(string & info);
+		virtual string & SearchQuery(string & info);
+		virtual string & InsertQuery(string & info, string & reason);
+		virtual string & RemoveQuery(string & info);
 	private:
 		BlackUser(){}
 		static BlackUser * instance;

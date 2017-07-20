@@ -17,50 +17,50 @@ int menu(void){
 }
 
 int main(void){
-	if(DataBase::db_connect("127.0.0.1", "root", "950214")
+	if(DataBase::Connect("127.0.0.1", "root", "950214")
 			== OP_ERROR_FLAG::DB_CONNECT_ERROR)
 		return -1;
 
 	int select;
-	bool successFlag = false;
-	bool userDataSet = false;
-	UserData userData;
-	User userDB;
+	bool success_flag = false;
+	bool user_data_set = false;
+	UserData user_data;
+	User user_db;
 	while(1){
 		select = menu();
 		if(select == 1){ //insert
 			string id, pwd, email;
 			cout << "id pwd email : "; cin >> id >> pwd >> email;
-			successFlag = userDB.insert(id, pwd, email);
+			success_flag = user_db.Insert(id, pwd, email);
 		} else if(select == 2){ //select
 			string id, pwd;
 			cout << "id pwd : "; cin >> id >> pwd;
-			successFlag = userDataSet = userDB.search(id, pwd, &userData);
+			success_flag = user_data_set = user_db.Search(id, pwd, &user_data);
 		} else if(select == 3){ //delete
-			if(userDataSet)
-				successFlag = userDB.remove(userData);
+			if(user_data_set)
+				success_flag = user_db.Remove(user_data);
 			else
-				successFlag = false;
+				success_flag = false;
 		} else if(select == 4){ //update
-			if(userDataSet){
+			if(user_data_set){
 				string pwd, email;
 				cout << "pwd email: "; cin >> pwd >> email;
-				userData.setData(pwd, email);
-				userData.setRecentDate(get_time_yyyymmdd());
-				userData.setStat(100, true);
-				successFlag = userDB.update(&userData);
+				user_data.SetData(pwd, email);
+				user_data.SetRecentDate(GetTimeyyyymmdd());
+				user_data.SetStat(100, true);
+				success_flag = user_db.Update(&user_data);
 			}else
-				successFlag = false;
+				success_flag = false;
 		} else
 			break;
 		
-		if(successFlag)
+		if(success_flag)
 			cout << "Success" << endl;
 		else
 			cout << "Failed" << endl;
-		successFlag = false;
+		success_flag = false;
 	}
 
-	DataBase::db_close();
+	DataBase::Close();
 	return 0;
 }

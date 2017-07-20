@@ -5,16 +5,16 @@ using namespace ONEPOKER;
 int main(void){
 	TripleSearchTree data;
 
-	data.insert("Hello",10); 
-	data.insert("World", 20);
-	data.insert("Good by", 30);
-	data.insert("Godd", 40);
-	cout << "search Hello : " << data.search("Hello") << endl;
-	cout << "search Good : " << data.search("Good") << endl;
-	cout << "search Good by : " << data.search("Good by") << endl;
-	cout << "search World : " << data.search("World") << endl;
-	cout << "search None : " << data.search("None") << endl;
+	data.Insert("Hello",10); 
+	data.Insert("World", 20);
+	data.Insert("Good by", 30);
+	data.Insert("Godd", 40);
+	cout << "search Hello : " << data.Search("Hello") << endl;
+	cout << "search Good : " << data.Search("Good") << endl;
+	cout << "search Good by : " << data.Search("Good by") << endl;
+	cout << "search World : " << data.Search("World") << endl;
+	cout << "search None : " << data.Search("None") << endl;
 
-	data.clear();
+	data.Clear();
 	return 0;
 }

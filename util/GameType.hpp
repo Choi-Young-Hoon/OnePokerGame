@@ -2,8 +2,10 @@
 #define __ONEPOKER_UTIL_GAMETYPE_HEADER__
 namespace ONEPOKER{
 	enum PLAYER{
-		PLAYER1 = 0,
-		PLAYER2
+		PLAYER_1 = 0,
+		PLAYER_2,
+
+		PLAYER_NON
 	};
 
 	enum GAME{

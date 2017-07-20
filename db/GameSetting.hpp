@@ -18,14 +18,14 @@ namespace ONEPOKER{
 		 * 성공시 - true
 		 * 실패시 - false
 		 */
-		bool get_data();
+		bool GetData();
 
-		virtual string & getQuery() = 0;
+		virtual string & GetQuery() = 0;
 	};
 
 	class Rating : public GameSetting {
 	public:
-		inline Rating * getInstance(){
+		inline Rating * GetInstance(){
 			if(!instance)
 				instance = new Rating();
 			return instance;
@@ -36,8 +36,8 @@ namespace ONEPOKER{
 		 * @return
 		 * 쿼리 반환
 		 */
-		virtual string & getQuery();
-		int find_rating(int money);
+		virtual string & GetQuery();
+		int FindRating(int money);
 	private:
 		Rating(){}
 		Rating * instance;

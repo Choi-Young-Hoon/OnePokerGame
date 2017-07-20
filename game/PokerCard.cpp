@@ -4,7 +4,7 @@
 using namespace std;
 using namespace ONEPOKER;
 
-enum ONEPOKER::GAME PokerCard::check_win(const PokerCard & card){
+enum ONEPOKER::GAME PokerCard::CheckWin(const PokerCard & card){
 	enum ONEPOKER::GAME result;
 	if(type == card.type){ //UP UP, DOWN DOWN
 		if(name > card.name)

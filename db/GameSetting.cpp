@@ -5,18 +5,18 @@
 using namespace std;
 using namespace ONEPOKER;
 
-bool GameSetting::get_data(){
-	if(DataBase::db_query_run(getQuery()))
+bool GameSetting::GetData(){
+	if(DataBase::QueryRun(GetQuery()))
 		return false;
 	return true;
 }
 
-string & Rating::getQuery(){
+string & Rating::GetQuery(){
 	query = "";
 	return query;
 }
 
-int Rating::find_rating(int money){
+int Rating::FindRating(int money){
 	query = "" + to_string(money);
 	return 0;
 }
