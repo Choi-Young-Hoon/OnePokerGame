@@ -12,11 +12,32 @@ bool GameSetting::GetData(){
 }
 
 string & Rating::GetQuery(){
-	query = "";
+	query = "SELECT * FROM OP_RATING_TB";
 	return query;
+}
+
+bool Rating::InsertData(vector<string> & data){
+
+	return true;
 }
 
 int Rating::FindRating(int money){
 	query = "" + to_string(money);
 	return 0;
+}
+
+
+
+string & CardList::GetQuery(){
+	query = "SELECT * FROM OP_CARD_LIST_TB";
+	return query;
+}
+
+bool CardList::InsertData(vector<string> & data){
+
+	return true;
+}
+
+PokerCard CardList::GetRandomCard(){
+
 }

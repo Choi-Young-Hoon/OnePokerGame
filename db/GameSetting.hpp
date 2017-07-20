@@ -1,6 +1,7 @@
 #ifndef __ONPOKER_DB_GAMESETTING_HEADER__
 #define __ONPOKER_DB_GAMESETTING_HEADER__
 #include "db/DataBase.hpp"
+#include "game/PokerCard.hpp"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -21,12 +22,13 @@ namespace ONEPOKER{
 		bool GetData();
 
 		virtual string & GetQuery() = 0;
+		virtual bool InsertData(vector<string> & data) = 0;
 	};
 
 	class Rating : public GameSetting {
 	public:
 		inline Rating * GetInstance(){
-			if(!instance)
+			if(instance == NULL)
 				instance = new Rating();
 			return instance;
 		}
@@ -37,10 +39,29 @@ namespace ONEPOKER{
 		 * 쿼리 반환
 		 */
 		virtual string & GetQuery();
+		virtual bool InsertData(vector<string> & data);
 		int FindRating(int money);
 	private:
 		Rating(){}
 		Rating * instance;
+		string query;
+	};
+
+	class CardList : public GameSetting {
+	public:
+		inline CardList * GetInstance(){
+			if(instance == NULL)
+				instance = new CardList();
+			return instance;
+		}
+		
+		virtual string & GetQuery();
+		virtual bool InsertData(vector<string> & data);
+		PokerCard GetRandomCard();
+	private:
+		CardList(){}
+		CardList * instance;
+		vector<PokerCard> card_list;
 		string query;
 	};
 };
