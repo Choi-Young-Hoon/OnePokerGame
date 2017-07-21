@@ -23,5 +23,11 @@ namespace ONEPOKER{
 		USER_RATING
 	};
 
+	enum CARD_LIST_TB{
+		CARD_NAME = 0,
+		CARD_TYPE,
+		CARD_WIN
+	};
+
 };	
 #endif
