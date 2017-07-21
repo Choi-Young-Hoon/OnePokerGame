@@ -53,17 +53,13 @@ bool User::Search(string id, string pwd, UserData * user_info){
 #ifdef ONEPOKER_DEBUG
 	cout << "User select query : " << query << endl;
 #endif
-	if(DataBase::QueryRun(query)){
-		if(DataBase::GetResult()) {
-			if(DataBase::GetData(&data, DataBase::GetFieldCount())){
-				if(user_info != NULL)
-					SetData(user_info, data);
-				DataBase::FreeData();
-				return true;
-			}
-			else
-				return false;
-		}
+	if(DataBase::QueryRun(query) &&
+	   DataBase::GetResult() &&
+	   DataBase::GetData(&data, DataBase::GetFieldCount())){
+		if(user_info != NULL)
+			SetData(user_info, data);
+		DataBase::FreeData();
+		return true;
 	}
 	return false;
 }

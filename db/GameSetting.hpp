@@ -4,6 +4,8 @@
 #include "game/PokerCard.hpp"
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 namespace ONEPOKER{
@@ -27,7 +29,7 @@ namespace ONEPOKER{
 
 	class Rating : public GameSetting {
 	public:
-		inline Rating * GetInstance(){
+		static inline Rating * GetInstance(){
 			if(instance == NULL)
 				instance = new Rating();
 			return instance;
@@ -60,15 +62,17 @@ namespace ONEPOKER{
 		int FindRating(int money);
 	private:
 		Rating(){}
-		Rating * instance;
+		static Rating * instance;
 		string query;
 	};
 
 	class CardList : public GameSetting {
 	public:
-		inline CardList * GetInstance(){
-			if(instance == NULL)
+		static inline CardList * GetInstance(){
+			if(instance == NULL){
+				srand(time(NULL));
 				instance = new CardList();
+			}
 			return instance;
 		}
 		
@@ -96,7 +100,7 @@ namespace ONEPOKER{
 		PokerCard GetRandomCard();
 	private:
 		CardList(){}
-		CardList * instance;
+		static CardList * instance;
 		vector<PokerCard> card_list;
 		string query;
 	};

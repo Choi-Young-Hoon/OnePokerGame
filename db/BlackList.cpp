@@ -7,13 +7,11 @@ BlackIP * BlackIP::instance = NULL;
 BlackUser * BlackUser::instance = NULL;
 
 bool BlackList::Search(string info){
-	if(DataBase::QueryRun(SearchQuery(info))){
-		if(DataBase::GetResult()){
-			if(DataBase::GetRow()){
-				DataBase::FreeData();
-				return true;
-			}
-		}
+	if(DataBase::QueryRun(SearchQuery(info)) &&
+	   DataBase::GetResult() &&
+	   DataBase::GetRow()) {
+		DataBase::FreeData();
+		return true;
 	}		
 	return false;
 }

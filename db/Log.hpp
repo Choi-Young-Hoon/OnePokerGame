@@ -20,8 +20,8 @@ namespace ONEPOKER{
 		}
 
 		bool GetLog(string user){
-			if(DataBase::QueryRun(GetQuery(user)))
-				if(DataBase::GetResult())
+			if(DataBase::QueryRun(GetQuery(user)) &&
+			   DataBase::GetResult())
 					return true;
 			return false;
 		}

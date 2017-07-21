@@ -1,17 +1,25 @@
 #include "db/GameSetting.hpp"
 #include "util/DataBaseType.hpp"
+#include "util/GameType.hpp"
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include <cstdio>
 #include <ctime>
 using namespace std;
 using namespace ONEPOKER;
 
+Rating * Rating::instance = NULL;
+CardList * CardList::instance = NULL;
+
 bool GameSetting::GetData(){
-	if(DataBase::QueryRun(GetQuery()))
-		return false;
-	return true;
+	vector<string> data;
+	if(DataBase::QueryRun(GetQuery()) &&
+	   DataBase::GetResult()){
+		while(DataBase::GetData(&data, DataBase::GetFieldCount()))
+			InsertData(data);
+		return true;
+	}
+	return false;
 }
 
 string & Rating::GetQuery(){
@@ -46,11 +54,14 @@ bool CardList::InsertData(vector<string> & data){
 	PokerCard card;
 	if(data.size() != 3)
 		return false;
+	card.SetCard((enum CARD_TYPE)GetCardData(data[CARD_LIST_TB::CARD_TYPE]) ,
+		     (enum CARD)GetCardData(data[CARD_LIST_TB::CARD_NAME]) ,
+		     (enum CARD)GetCardData(data[CARD_LIST_TB::CARD_WIN]));
+	card_list.push_back(card);
 	return true;
 }
 
 PokerCard CardList::GetRandomCard(){
-	srand(time(NULL));
 	int random_val = rand() % card_list.size();
 #ifdef ONEPOKER_DEBUG
 	cout << "CardList random val : " << random_val << endl;
