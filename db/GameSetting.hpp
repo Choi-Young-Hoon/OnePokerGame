@@ -4,6 +4,7 @@
 #include "game/PokerCard.hpp"
 #include <iostream>
 #include <string>
+#include <map>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
@@ -63,6 +64,7 @@ namespace ONEPOKER{
 	private:
 		Rating(){}
 		static Rating * instance;
+		map<int, int> rating_list;
 		string query;
 	};
 

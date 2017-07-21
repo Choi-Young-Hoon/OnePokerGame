@@ -15,15 +15,17 @@ bool GameSetting::GetData(){
 	vector<string> data;
 	if(DataBase::QueryRun(GetQuery()) &&
 	   DataBase::GetResult()){
-		while(DataBase::GetData(&data, DataBase::GetFieldCount()))
-			InsertData(data);
+		while(DataBase::GetData(&data, DataBase::GetFieldCount())){
+			if(!InsertData(data))
+				return false;
+		}
 		return true;
 	}
 	return false;
 }
 
 string & Rating::GetQuery(){
-	query = "SELECT * FROM OP_RATING_TB";
+	query = "SELECT rating_name, rating_condition FROM OP_RATING_TB";
 #ifdef ONEPOKER_DEBUG
 	cout << "Rating GetQuery : " << endl;
 #endif
@@ -31,13 +33,30 @@ string & Rating::GetQuery(){
 }
 
 bool Rating::InsertData(vector<string> & data){
-
+	if(data.size() != 2)
+		return false;
+	rating_list.insert(make_pair(atoi(data[RATING_TB::RATING_NAME].c_str()), 
+				     atoi(data[RATING_TB::RATING_CONDITION].c_str())));
 	return true;
 }
 
 int Rating::FindRating(int money){
-	query = "" + to_string(money);
-	return 0;
+	int before = rating_list.size();
+#ifdef ONEPOKER_DEBUG
+		cout << "FindRating now money : " << money << endl;
+#endif
+	for(auto & iter : rating_list){
+		if(money > iter.second){
+			before = iter.first;
+			break;
+		}
+#ifdef ONEPOKER_DEBUG
+		cout << "FindRating first : " << iter.first << 
+			"\tsecond : " << iter.second << endl;
+#endif
+		before = iter.first;
+	}
+	return before;
 }
 
 

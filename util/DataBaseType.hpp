@@ -28,6 +28,10 @@ namespace ONEPOKER{
 		CARD_TYPE,
 		CARD_WIN
 	};
-
+	
+	enum RATING_TB{
+		RATING_NAME = 0,
+		RATING_CONDITION
+	};
 };	
 #endif
