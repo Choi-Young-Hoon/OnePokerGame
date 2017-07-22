@@ -2,7 +2,7 @@ BUILDDIR = ./db ./util ./game ./test
 
 INCLUDEPATH = $(shell pwd)
 export INCLUDEPATH
-CPPFLAGS = -O2 -W -Wall -std=c++0x -I$(INCLUDEPATH) $(shell mysql_config --include)
+CPPFLAGS = -O2 -W -Wall -std=c++11 -I$(INCLUDEPATH) $(shell mysql_config --include)
 export CPPFLAGS
 LIBPATH = $(subst ./,-L$(INCLUDEPATH)/,$(BUILDDIR)) $(shell mysql_config --libs)
 export LIBPATH

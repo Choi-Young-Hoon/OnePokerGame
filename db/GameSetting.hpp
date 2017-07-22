@@ -1,7 +1,8 @@
-#ifndef __ONPOKER_DB_GAMESETTING_HEADER__
-#define __ONPOKER_DB_GAMESETTING_HEADER__
-#include "db/DataBase.hpp"
+#ifndef __ONEPOKER_DB_GAMESETTING_HEADER__
+#define __ONEPOKER_DB_GAMESETTING_HEADER__
+
 #include "game/PokerCard.hpp"
+#include "db/DataBase.hpp"
 #include <iostream>
 #include <string>
 #include <map>

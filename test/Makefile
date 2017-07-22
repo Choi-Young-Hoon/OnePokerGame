@@ -7,8 +7,11 @@ LIBRARY = -lonepokerdb -lonepokergamedata -lonepokerutil
 
 all:$(TARGETS)
 debug: $(TARGETS)
+
+
 $(TARGETS):
 	$(CPP) -o $@ $@.cpp -g -ggdb $(CPPFLAGS) $(LIBPATH) $(LIBRARY) $(shell mysql_config --libs)
+
 
 clean:
 	rm -rf $(OBJECTS) $(TARGETS)

@@ -2,14 +2,16 @@
 #define __ONPOKER_UTIL_DATABASETYPE_HEADER__
 namespace ONEPOKER{
 
+	//DB_DATA_TYPE의 지정 문자열.
 	static const char * DB_DATA_ENUM[] = {"X", "O"};
 
 	enum DB_DATA_TYPE{
-		EMAIL_CERT_NO = 0,
+		EMAIL_CERT_NO = 0, //이메일 인증 여부
 		EMAIL_CERT_YES 
 	};
 	
 
+	//User 테이블 필드
 	enum USER_TB{
 		USER_NUM = 0,
 		USER_ID,
@@ -22,13 +24,15 @@ namespace ONEPOKER{
 		USER_LOSE,
 		USER_RATING
 	};
-
+	
+	//Card 리스트 테이블 필드
 	enum CARD_LIST_TB{
 		CARD_NAME = 0,
 		CARD_TYPE,
 		CARD_WIN
 	};
 	
+	//Rating 리스트 테이블 필드
 	enum RATING_TB{
 		RATING_NAME = 0,
 		RATING_CONDITION
