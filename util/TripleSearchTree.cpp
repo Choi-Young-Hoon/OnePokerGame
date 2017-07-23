@@ -3,7 +3,7 @@
 #include <string>
 #include <stack>
 using namespace std;
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 
 bool TripleSearchTree::Insert(const char * data, int type){

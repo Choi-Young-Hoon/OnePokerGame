@@ -1,7 +1,7 @@
 #include "db/BlackList.hpp"
 #include "util/Time.hpp"
 using namespace std;
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 BlackIP * BlackIP::instance = NULL;
 BlackUser * BlackUser::instance = NULL;

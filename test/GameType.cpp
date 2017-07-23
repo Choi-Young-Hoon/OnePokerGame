@@ -2,7 +2,7 @@
 #include "util/GameType.hpp"
 
 using namespace std;
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 int main(void){
 	CardDataMapInit();

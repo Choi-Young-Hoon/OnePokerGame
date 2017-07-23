@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace ONEPOKER{
+namespace CARDGAME{
 	class DataBase{
 	public:
 		DataBase():db_result(NULL){}
@@ -24,7 +24,7 @@ namespace ONEPOKER{
 		 * 성공시 - OP_ERROR_FLAG::DB_CONNECT_SUCCESS 반환
 		 * 실패시 - OP_ERROR_FLAG::DB_CONNECT_ERROR 반환
 		 */
-		static enum ONEPOKER::OP_ERROR_FLAG Connect(string ip, string user, string pwd);	
+		static enum OP_ERROR_FLAG Connect(string ip, string user, string pwd);	
 
 		/*
 		 * DB와의 연결을 종료한다.

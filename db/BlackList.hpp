@@ -7,7 +7,7 @@
 #include <string>
 using namespace std;
 
-namespace ONEPOKER{
+namespace CARDGAME{
 	class BlackList : public DataBase {
 	public:
 		BlackList(){}

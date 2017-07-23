@@ -5,7 +5,7 @@
 #include <string>
 using namespace std;
 
-namespace ONEPOKER{
+namespace CARDGAME{
 	//Player
 	enum PLAYER{
 		PLAYER_1 = 0,
@@ -39,6 +39,8 @@ namespace ONEPOKER{
 		CARD_DOWN, 
 		CARD_UP
 	};
+
+//@TODO 안씀.
 	//두장의 카드중 인덱스
 	enum CARD_INDEX{
 		CARD_FIRST = 0,

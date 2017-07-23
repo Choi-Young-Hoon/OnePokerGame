@@ -1,7 +1,7 @@
 #ifndef __ONEPOKER_UTIL_ERROR_HEADDER__
 #define __ONEPOKER_UTIL_ERROR_HEADDER__
 
-namespace ONEPOKER{
+namespace CARDGAME{
 	enum OP_ERROR_FLAG{
 		DB_CONNECT_SUCCESS = 0, //DB 연결 성공
 		DB_CONNECT_ERROR, 	//DB 연결 실패

@@ -4,7 +4,7 @@
 #include <string>
 #include <cstdlib>
 using namespace std;
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 bool User::Insert(string id, string pwd, string email){
 	query = "INSERT INTO OP_USER_TB(id, pass, email, rating_code) ";

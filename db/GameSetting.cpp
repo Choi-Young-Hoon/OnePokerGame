@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 Rating * Rating::instance = NULL;
 CardList * CardList::instance = NULL;

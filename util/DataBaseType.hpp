@@ -1,6 +1,6 @@
 #ifndef __ONPOKER_UTIL_DATABASETYPE_HEADER__
 #define __ONPOKER_UTIL_DATABASETYPE_HEADER__
-namespace ONEPOKER{
+namespace CARDGAME{
 
 	//DB_DATA_TYPE의 지정 문자열.
 	static const char * DB_DATA_ENUM[] = {"X", "O"};

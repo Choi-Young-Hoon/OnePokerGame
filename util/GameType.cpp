@@ -1,7 +1,7 @@
 #include "util/GameType.hpp"
 #include <map>
 using namespace std;
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 extern "C" int GetCardData(string data){
 	return card_data[data];

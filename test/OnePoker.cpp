@@ -5,10 +5,13 @@
 #include <vector>
 
 using namespace std;
-using namespace ONEPOKER;
-void ShowCard(PokerCard * card);
+using namespace CARDGAME;
+using namespace CARDGAME::ONEPOKER;
+
+void ShowCard(vector<PokerCard> & card);
 string WhatIsThisCard(enum CARD_TYPE type);
 string WhatIsThisCard(enum CARD card);
+string WhatIsThis(enum PLAYER player);
 
 int main(void){
 	if(DataBase::Connect("127.0.0.1", "root", "950214") 
@@ -35,28 +38,35 @@ int main(void){
 
 	CardDataMapInit();
 	OnePoker poker_game;
-	if(!poker_game.SetUser(PLAYER::PLAYER_1, user1)){
+	if(!poker_game.SetUser(user1)){
 		cout << "PokerGame SetUser Failed user1" << endl;
 		return -1;
 	}
-	if(!poker_game.SetUser(PLAYER::PLAYER_2, user2)){
+	if(!poker_game.SetUser(user2)){
 		cout << "PokerGame SetUser Failed user2" << endl;
 		return -1;
 	}
-	if(!poker_game.GetRandomCard()){
-		cout << "PokerGame GetRandomCard Failed" << endl;
-		return -1;
-	}
+	
+	PokerCard card;
+	card.SetCard(CARD_DOWN, CARD_2, CARD_NON);
+	poker_game.SetCard(PLAYER_1, card);
+	card.SetCard(CARD_UP, CARD_A, CARD_NON);
+	poker_game.SetCard(PLAYER_2, card);
+	card.SetCard(CARD_UP, CARD_9, CARD_NON);
+	poker_game.SetCard(PLAYER_1, card);
+	card.SetCard(CARD_UP, CARD_8, CARD_NON);
+	poker_game.SetCard(PLAYER_2, card);
+	
 	poker_game.SetOpenCard(PLAYER::PLAYER_1, CARD_INDEX::CARD_FIRST);
-	poker_game.SetOpenCard(PLAYER::PLAYER_2, CARD_INDEX::CARD_SECOND);
+	poker_game.SetOpenCard(PLAYER::PLAYER_2, CARD_INDEX::CARD_FIRST);
 
-	PokerCard * show_card;
+	vector<PokerCard> show_card;
 	cout << "Player 1 Open Card Info" << endl;
-	show_card = poker_game.GetOpenCard(PLAYER::PLAYER_1);
+	show_card = poker_game.GetOpenCardList(PLAYER::PLAYER_1);
 	ShowCard(show_card);
 	
 	cout << "Player 2 Open Card Info" << endl;
-	show_card = poker_game.GetOpenCard(PLAYER::PLAYER_2);
+	show_card = poker_game.GetOpenCardList(PLAYER::PLAYER_2);
 	ShowCard(show_card);
 
 
@@ -71,14 +81,18 @@ int main(void){
 			cout << "DRAW!!!!!!" << endl;
 			break;
 	}
+	poker_game.GameFinish();
+
 	DataBase::Close();
 	return 0;
 }
 
-void ShowCard(PokerCard * card){
-	cout << "Card type : " << WhatIsThisCard(card->GetType()) << endl;
-	cout << "Card name : " << WhatIsThisCard(card->GetName()) << endl;
-	cout << "Card win : " << WhatIsThisCard(card->GetWinCard()) << endl;
+void ShowCard(vector<PokerCard> & card_list){
+	for(auto & card : card_list){
+		cout << "Card type : " << WhatIsThisCard(card.GetType()) << endl;
+		cout << "Card name : " << WhatIsThisCard(card.GetName()) << endl;
+		cout << "Card win : " << WhatIsThisCard(card.GetWinCard()) << endl;
+	}
 }
 
 string WhatIsThisCard(enum CARD_TYPE type){
@@ -110,4 +124,12 @@ string WhatIsThisCard(enum CARD card){
 	return "";
 }
 
+string WhatIsThis(enum PLAYER player){
+	switch(player){
+		case PLAYER_1: return "PLAYER 1";
+		case PLAYER_2: return "PLAYER_2";
+		case PLAYER_NON: return "PLAYER_NON";
+	}
+	return "PLAYER_NON";
+}
 			     

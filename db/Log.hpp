@@ -7,7 +7,7 @@
 #include <vector>
 using namespace std;
 
-namespace ONEPOKER{
+namespace CARDGAME {
 	template <typename ... ARGS>
 	class Log : public DataBase {
 	public:
@@ -59,9 +59,9 @@ namespace ONEPOKER{
 		virtual string & WriteQuery(ARGS ... arg) = 0;
 	};
 
-	class MatchLog : public Log<string&, string&, enum ONEPOKER::PLAYER> {
+	class MatchLog : public Log<string&, string&, enum PLAYER> {
 	public:
-		MatchLog():Log<string&, string&, enum ONEPOKER::PLAYER>(){}
+		MatchLog():Log<string&, string&, enum PLAYER>(){}
 		virtual ~MatchLog(){}
 
 		/*
@@ -77,7 +77,7 @@ namespace ONEPOKER{
 		 * winner - 승리한 유저 값
 		 */
 		virtual string & WriteQuery(string & user1, string & user2
-				, enum ONEPOKER::PLAYER winner);
+				, enum PLAYER winner);
 	private:
 		string query;
 	};

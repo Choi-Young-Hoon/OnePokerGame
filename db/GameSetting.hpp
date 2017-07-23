@@ -10,7 +10,7 @@
 #include <ctime>
 using namespace std;
 
-namespace ONEPOKER{
+namespace CARDGAME{
 	
 	class GameSetting : public DataBase {
 	public:

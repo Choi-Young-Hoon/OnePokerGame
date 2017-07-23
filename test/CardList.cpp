@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 string WhatIsThis(enum CARD_TYPE type){
 	switch(type){

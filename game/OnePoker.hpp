@@ -5,85 +5,112 @@
 #include "db/GameSetting.hpp"
 #endif
 
+#include "game/CardGame.hpp"
 #include "game/PokerUser.hpp"
-#include "game/OnePokerDefault.hpp"
 #include "util/GameType.hpp"
+#include "util/GameRule.hpp"
 #include <iostream>
 #include <vector>
 using namespace std;
 
+
+namespace CARDGAME{
 namespace ONEPOKER{
-	class OnePoker : public OnePokerDefault{
+	class OnePoker : public CardGame{
 	public:
-		OnePoker():stage_money(0){
-			card_list = CardList::GetInstance();
-			card_list->GetData();
-		}
-		OnePoker(PokerUser player1, PokerUser player2)
-			:stage_money(0){
-				player_list.push_back(player1);
+		OnePoker(){}
+		OnePoker(PokerUser player1, PokerUser player2){
+				player_list.push_back(player1);	
 				player_list.push_back(player2);
 		}
 		
-		//이긴 유저 번호를 번환
-		enum PLAYER CheckWinner();
+		virtual ~OnePoker(){}
 
-		//내부에 설정된 유저에게 랜덤하게 카드를 발급
-		bool GetRandomCard();
-		
+		//이긴 유저 번호를 번환
+		virtual enum PLAYER CheckWinner();
 
 		//게임이 끝나 종료 작업
-		void GameFinish();
+		virtual void GameFinish(){
+			for(int i = 0; i < player_list.size(); i++){
+				player_list[i].CardClear();
+				if(winner == i)
+					player_list[i].GetUserData()->SetStat(player_betting[i], true);
+				else
+					player_list[i].GetUserData()->SetStat(player_betting[i] * (-1), false);
+					
+			}
+		}
 		
 		//특정 유저의 판돈 배팅
 		inline void Betting(enum PLAYER player, int betting_money){
 			player_betting[player] += betting_money;
+			CardGame::AddStageMoney(betting_money);
 		}
 
 		//특정 유저의 PokerUser 객체를 반환한다.
-		inline PokerUser * GetUser(enum PLAYER player){
-			if((player >= OnePokerDefault::MAX_USER) && 
+		virtual PokerUser * GetUser(enum PLAYER player){
+			if(((int)player >= (int)RULE::MAX_USER) && 
 			   (player >= player_list.size()))
 				return NULL;
 			return &player_list[player];
 		}
 
+		//카드 개수 반환	
+		virtual inline int GetUserCount(){
+			return player_list.size();
+		}
+
 		//특정 유저의 카드를 반환한다.
-		inline PokerCard * GetCard(enum PLAYER player,
+		virtual PokerCard * GetCard(enum PLAYER player,
 					   enum CARD_INDEX card_index){
-			if(player >= player_list.size())
+			if((int)player >= player_list.size())
 				return NULL;
 			return player_list[player].GetCard(card_index);
 		}
 
+		virtual inline int GetCardCount(enum PLAYER player){
+			return player_list[player].GetCardCount();
+		}
+
+
 		//is_open 플래그가 지정된 카드를 반환한다.
-		inline PokerCard * GetOpenCard(enum PLAYER player){
+		virtual vector<PokerCard> GetOpenCardList(enum PLAYER player){
 			return player_list[player].GetOpenCard();
 		}
 
 		//특정 플레이어의 카드에 is_open 플래그 지정
-		inline void SetOpenCard(enum PLAYER player_num, 
-					enum CARD_INDEX card_index){
+		virtual bool SetOpenCard(enum PLAYER player_num, 
+					int card_index){
+			if(player_list[player_num].GetCardCount() <= card_index)
+				return false;
 			player_list[player_num].SetOpenCard(card_index);
+			return true;
 		}
 
 		//Setter
-		inline bool SetUser(enum ONEPOKER::PLAYER player_num, PokerUser & player){
-			if(player_list.size() == OnePokerDefault::MAX_USER)
+
+		virtual inline bool SetCard(enum PLAYER player_num, PokerCard & card){
+			if(player_list[player_num].GetCardCount() >= RULE::MAX_CARD)
+				return false;
+			player_list[player_num].AddCard(card);
+			return true;
+		}
+		virtual inline bool SetUser(PokerUser & player){
+			if(player_list.size() == RULE::MAX_USER)
 				return false;
 #ifdef ONEPOKER_DEBUG
 			cout << "OnePoker SetUser" << endl;
 #endif
 			player_list.push_back(player);
+			player_betting.push_back(0);
 			return true;
 		}
-		//Getter (판돈?)
-		inline int GetStageMoney(){ return stage_money; }
 	private:
-		CardList * card_list;
+		vector<PokerCard> card_dec;
 		vector<PokerUser> player_list;
-		int stage_money;
 		vector<int> player_betting;
+		enum PLAYER winner;
 	};
+};
 };
 #endif 

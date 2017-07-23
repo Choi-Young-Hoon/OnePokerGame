@@ -1,6 +1,6 @@
 #include "db/Log.hpp"
 #include "util/Time.hpp"
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 string & MatchLog::GetQuery(string & user){
 	query = "SELECT * FROM OP_MATCH_LOG_TB WHERE ";
@@ -12,10 +12,10 @@ string & MatchLog::GetQuery(string & user){
 	return query;
 }
 
-string & MatchLog::WriteQuery(string & user1, string & user2, enum ONEPOKER::PLAYER winner){
+string & MatchLog::WriteQuery(string & user1, string & user2, enum PLAYER winner){
 	query = "INSERT INTO OP_MATCH_LOG_TB(user_id1, user_id2, winner, add_date) ";
 	query+= "VALUES('" + user1 + "', '" + user2 + "' ";
-	query+= (winner == ONEPOKER::PLAYER::PLAYER_1) ? ",'1'" :",'2'";
+	query+= (winner == PLAYER::PLAYER_1) ? ",'1'" :",'2'";
 	query+= ", '" + GetTimeyyyymmdd() + "')";
 #ifdef ONEPOKER_DEBUG
 	cout << "MatchLog insert query : " << query << endl;

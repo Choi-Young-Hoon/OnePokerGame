@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-namespace ONEPOKER{
+namespace CARDGAME{
 	class TripleSearchTree{
 	public:
 		TripleSearchTree(): root(NULL), data_count(0), node_count(0){}

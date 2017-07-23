@@ -5,7 +5,7 @@
 #include <string>
 using namespace std;
 
-namespace ONEPOKER{
+namespace CARDGAME{
 	class User;
 	class UserData{
 	public:
@@ -115,7 +115,6 @@ namespace ONEPOKER{
 	private:
 		string query;
 		vector<string> data;
-	
 	};
 };	
 #endif

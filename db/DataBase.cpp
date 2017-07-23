@@ -2,11 +2,11 @@
 #include <iostream>
 #include <string>
 using namespace std;
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 MYSQL DataBase::db;
 
-enum ONEPOKER::OP_ERROR_FLAG DataBase::Connect(string ip, string user, string pwd){
+enum OP_ERROR_FLAG DataBase::Connect(string ip, string user, string pwd){
 	
 	mysql_init(&db);
 

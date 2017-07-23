@@ -5,7 +5,7 @@
 using namespace std;
 #include <time.h>
 
-namespace ONEPOKER{
+namespace CARDGAME{
 	
 	/*
 	 * 현재 날짜 반환 함수 형식 yyyy-mm-dd

@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 using namespace std;
-using namespace ONEPOKER;
+using namespace CARDGAME;
 
 int main(void){
 	if(DataBase::Connect("127.0.0.1", "root", "950214")
