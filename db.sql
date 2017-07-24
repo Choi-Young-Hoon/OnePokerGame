@@ -4,8 +4,6 @@ use ONEPOKER;
 create table OP_CARD_LIST_TB(
 	card_code int not null auto_increment primary key, 
 	card_name varchar(4) not null unique,
-	card_type ENUM('u', 'd'),
-	card_win  varchar(4)
 );
 
 create table OP_RATING_TB(
@@ -58,24 +56,25 @@ create table OP_MATCH_LOG_TB(
 	add_date DATE not null
 );
 
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('2', 'd', 'A');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('3', 'd', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('4', 'd', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('5', 'd', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('6', 'd', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('7', 'd', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('8', 'u', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('9', 'u', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('10', 'u', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('K', 'u', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('Q', 'u', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('J', 'u', '0');
-INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('A', 'u', '0');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('2');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('3');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('4');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('5');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('6');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('7');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('8');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('9');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('10');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('K');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('Q');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('J');
+INSERT INTO OP_CARD_LIST_TB(card_name, card_type, card_win) VALUES('A');
 
 INSERT INTO OP_RATING_TB(rating_name, rating_condition) VALUES("4", 0);
 INSERT INTO OP_RATING_TB(rating_name, rating_condition) VALUES("3", 10000);
 INSERT INTO OP_RATING_TB(rating_name, rating_condition) VALUES("2", 30000);
 INSERT INTO OP_RATING_TB(rating_name, rating_condition) VALUES("1", 90000);
 
-
+INSERT INTO OP_USER_TB(id, pass, email, rating_code) VALUES('hun5077', '123456', 'wqedwa@asd.com', 1);
+INSERT INTO OP_USER_TB(id, pass, email, rating_code) VALUES('eqw456', '123456', 'wqedasdfsdaa@naefd.com', 1);
 

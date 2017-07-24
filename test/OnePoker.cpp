@@ -93,7 +93,7 @@ int main(void){
 
 void ShowCard(vector<PokerCard> & card_list){
 	for(auto & card : card_list){
-		cout << "Card type : " << WhatIsThisCard(card.GetType()) << endl;
+		cout << "Card type : " << WhatIsThisCard((enum CARD_TYPE)card.GetType()) << endl;
 		cout << "Card name : " << WhatIsThisCard(card.GetName()) << endl;
 		cout << "Card win : " << WhatIsThisCard(card.GetWinCard()) << endl;
 	}

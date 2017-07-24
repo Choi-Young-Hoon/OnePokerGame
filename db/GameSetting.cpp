@@ -62,7 +62,7 @@ int Rating::FindRating(int money){
 
 
 string & CardList::GetQuery(){
-	query = "SELECT card_name, card_type, card_win FROM OP_CARD_LIST_TB";
+	query = "SELECT card_name FROM OP_CARD_LIST_TB";
 #ifdef ONEPOKER_DEBUG
 	cout << "CardList GetQuery : " << query << endl;
 #endif
@@ -70,20 +70,13 @@ string & CardList::GetQuery(){
 }
 
 bool CardList::InsertData(vector<string> & data){
-	PokerCard card;
-	if(data.size() != 3)
-		return false;
-	card.SetCard((enum CARD_TYPE)GetCardData(data[CARD_LIST_TB::CARD_TYPE]) ,
-		     (enum CARD)GetCardData(data[CARD_LIST_TB::CARD_NAME]) ,
-		     (enum CARD)GetCardData(data[CARD_LIST_TB::CARD_WIN]));
-	card_list.push_back(card);
+#ifdef ONEPOKER_DEBUG
+	cout << "CardList InsertData : " << data[CARD_LIST_TB::CARD_NAME] << endl;
+#endif
+	card_list.push_back( data[CARD_LIST_TB::CARD_NAME] );
 	return true;
 }
 
-PokerCard CardList::GetRandomCard(){
-	int random_val = rand() % card_list.size();
-#ifdef ONEPOKER_DEBUG
-	cout << "CardList random val : " << random_val << endl;
-#endif
-	return card_list[random_val];
+vector<string> &  CardList::GetCardList(){
+	return card_list;
 }

@@ -12,7 +12,7 @@ namespace CARDGAME{
 		~PokerCard(){}
 		
 		//카드 정보 입력
-		inline void SetCard(enum CARD_TYPE type
+		inline void SetCard(int type
 				, enum CARD name
 				, enum CARD win){
 			this->type = type;
@@ -24,12 +24,12 @@ namespace CARDGAME{
 		inline void SetOpenCard(){ is_open = true; }
 		inline void SetCloseCard(){ is_open = false; }
 		//Getter
-		inline enum CARD_TYPE GetType(){ return type; }
+		inline int GetType(){ return type; }
 		inline enum CARD GetName(){ return name; }
 		inline enum CARD GetWinCard(){ return win_card; }
 		inline bool IsOpen(){ return is_open; }
 	private:
-		enum CARD_TYPE type;	//Up, Down flag
+		int type;	//Up, Down or Shape flag
 		enum CARD name;	//카드 종류
 		enum CARD win_card;	//이길 수 있는 카드
 		bool is_open;	//open 된 카드인지.

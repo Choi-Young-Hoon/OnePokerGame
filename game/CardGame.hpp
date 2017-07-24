@@ -5,6 +5,7 @@
 #include "util/GameType.hpp"
 using namespace CARDGAME;
 #include <map>
+#include <queue>
 using namespace std;
 
 namespace CARDGAME {
@@ -18,8 +19,9 @@ namespace CARDGAME {
 
 		inline void AddStageMoney(int money){ stage_money += money; }
 		inline int GetStageMoney(){ return stage_money; }
+		
 		//랜덤하게 섞은 덱을 반환한다.	
-		vector<PokerCard> GetRandomMixDec();
+		queue<PokerCard> GetRandomMixDeck(vector<string> & card_list, enum CARD_DECK deck_type);
 
 		//게임 종료
 		virtual void GameFinish() = 0;

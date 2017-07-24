@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
+#include <iostream>
 #include <string>
 #include <vector>
 using namespace std;

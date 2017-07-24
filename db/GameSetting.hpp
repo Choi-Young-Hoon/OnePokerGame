@@ -100,11 +100,11 @@ namespace CARDGAME{
 		 * card_list 를 참고 하여
 		 * 저장되어 있는 카드중 랜덤하게 반환한다.
 		 */
-		PokerCard GetRandomCard();
+		vector<string> & GetCardList();
 	private:
 		CardList(){}
 		static CardList * instance;
-		vector<PokerCard> card_list;
+		vector<string> card_list;
 		string query;
 	};
 };

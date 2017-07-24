@@ -18,6 +18,11 @@ namespace CARDGAME{
 	enum GAME_MODE{
 		GAME_ONEPOKER = 0
 	};
+	//덱 타입.
+	enum CARD_DECK{
+		DECK_UP_DOWN = 0,
+		DECK_SHAPE
+	};
 
 	//Game 결과
 	enum GAME{

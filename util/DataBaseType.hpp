@@ -28,8 +28,6 @@ namespace CARDGAME{
 	//Card 리스트 테이블 필드
 	enum CARD_LIST_TB{
 		CARD_NAME = 0,
-		CARD_TYPE,
-		CARD_WIN
 	};
 	
 	//Rating 리스트 테이블 필드
