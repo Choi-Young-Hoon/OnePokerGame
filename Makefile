@@ -1,4 +1,4 @@
-BUILDDIR = ./db ./util ./game ./test 
+BUILDDIR = ./db ./util ./game ./server ./test ./test_server ./test_client
 
 INCLUDEPATH = $(shell pwd)
 export INCLUDEPATH
