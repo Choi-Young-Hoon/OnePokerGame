@@ -20,11 +20,6 @@ namespace CARDGAME{
 			this->win_card = win;
 		}
 	
-		/*
-		//현재 카드가 card 를 이기는지 확인.
-		enum GAME CheckWin(const PokerCard & card);
-		*/
-		
 		//Setter
 		inline void SetOpenCard(){ is_open = true; }
 		inline void SetCloseCard(){ is_open = false; }

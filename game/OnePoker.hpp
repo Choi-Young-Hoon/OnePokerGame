@@ -31,7 +31,7 @@ namespace ONEPOKER{
 
 		//게임이 끝나 종료 작업
 		virtual void GameFinish(){
-			for(int i = 0; i < player_list.size(); i++){
+			for(unsigned int i = 0; i < player_list.size(); i++){
 				player_list[i].CardClear();
 				if(winner == i)
 					player_list[i].GetUserData()->SetStat(player_betting[i], true);
