@@ -14,6 +14,11 @@ namespace CARDGAME{
 		PLAYER_NON
 	};
 
+	//게임 모드.
+	enum GAME_MODE{
+		GAME_ONEPOKER = 0
+	};
+
 	//Game 결과
 	enum GAME{
 		LOSE = 0,
@@ -38,6 +43,13 @@ namespace CARDGAME{
 		CARD_NON_TYPE = 0,
 		CARD_DOWN, 
 		CARD_UP
+	};
+	//카드 도형 모양
+	enum CARD_SHAPE{
+		CARD_DIAMOND = 0,
+		CARD_HEART,
+		CARD_TREECLOVER,
+		CARD_SPADE
 	};
 
 //@TODO 안씀.

@@ -141,7 +141,7 @@ namespace CARDGAME{
 	private:
 		int epoll_fd;
 		vector<int> fd_list;
-		int max_client_count;
+		unsigned int max_client_count;
 		struct epoll_event * ep_event;
 		int ep_event_count;
 		int ep_event_index;

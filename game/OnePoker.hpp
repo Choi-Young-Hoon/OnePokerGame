@@ -42,7 +42,7 @@ namespace ONEPOKER{
 		}
 		
 		//특정 유저의 판돈 배팅
-		inline void Betting(enum PLAYER player, int betting_money){
+		virtual void Betting(enum PLAYER player, int betting_money){
 			player_betting[player] += betting_money;
 			CardGame::AddStageMoney(betting_money);
 		}
@@ -56,7 +56,7 @@ namespace ONEPOKER{
 		}
 
 		//카드 개수 반환	
-		virtual inline int GetUserCount(){
+		virtual int GetUserCount(){
 			return player_list.size();
 		}
 
@@ -68,7 +68,7 @@ namespace ONEPOKER{
 			return player_list[player].GetCard(card_index);
 		}
 
-		virtual inline int GetCardCount(enum PLAYER player){
+		virtual int GetCardCount(enum PLAYER player){
 			return player_list[player].GetCardCount();
 		}
 
@@ -88,14 +88,13 @@ namespace ONEPOKER{
 		}
 
 		//Setter
-
-		virtual inline bool SetCard(enum PLAYER player_num, PokerCard & card){
+		virtual bool SetCard(enum PLAYER player_num, PokerCard & card){
 			if(player_list[player_num].GetCardCount() >= RULE::MAX_CARD)
 				return false;
 			player_list[player_num].AddCard(card);
 			return true;
 		}
-		virtual inline bool SetUser(PokerUser & player){
+		virtual bool SetUser(PokerUser & player){
 			if(player_list.size() == RULE::MAX_USER)
 				return false;
 #ifdef ONEPOKER_DEBUG

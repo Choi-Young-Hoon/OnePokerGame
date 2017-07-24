@@ -1,5 +1,6 @@
 #include "db/User.hpp"
 #include "game/OnePoker.hpp"
+#include "util/GameType.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -37,40 +38,42 @@ int main(void){
 
 
 	CardDataMapInit();
-	OnePoker poker_game;
-	if(!poker_game.SetUser(user1)){
+	CardGame * poker_game = SelectGameMode(GAME_MODE::GAME_ONEPOKER);
+	if(poker_game == NULL)
+		return -1;
+	if(!poker_game->SetUser(user1)){
 		cout << "PokerGame SetUser Failed user1" << endl;
 		return -1;
 	}
-	if(!poker_game.SetUser(user2)){
+	if(!poker_game->SetUser(user2)){
 		cout << "PokerGame SetUser Failed user2" << endl;
 		return -1;
 	}
 	
 	PokerCard card;
 	card.SetCard(CARD_DOWN, CARD_2, CARD_NON);
-	poker_game.SetCard(PLAYER_1, card);
+	poker_game->SetCard(PLAYER_1, card);
 	card.SetCard(CARD_UP, CARD_A, CARD_NON);
-	poker_game.SetCard(PLAYER_2, card);
+	poker_game->SetCard(PLAYER_2, card);
 	card.SetCard(CARD_UP, CARD_9, CARD_NON);
-	poker_game.SetCard(PLAYER_1, card);
+	poker_game->SetCard(PLAYER_1, card);
 	card.SetCard(CARD_UP, CARD_8, CARD_NON);
-	poker_game.SetCard(PLAYER_2, card);
+	poker_game->SetCard(PLAYER_2, card);
 	
-	poker_game.SetOpenCard(PLAYER::PLAYER_1, CARD_INDEX::CARD_FIRST);
-	poker_game.SetOpenCard(PLAYER::PLAYER_2, CARD_INDEX::CARD_FIRST);
+	poker_game->SetOpenCard(PLAYER::PLAYER_1, CARD_INDEX::CARD_FIRST);
+	poker_game->SetOpenCard(PLAYER::PLAYER_2, CARD_INDEX::CARD_FIRST);
 
 	vector<PokerCard> show_card;
 	cout << "Player 1 Open Card Info" << endl;
-	show_card = poker_game.GetOpenCardList(PLAYER::PLAYER_1);
+	show_card = poker_game->GetOpenCardList(PLAYER::PLAYER_1);
 	ShowCard(show_card);
 	
 	cout << "Player 2 Open Card Info" << endl;
-	show_card = poker_game.GetOpenCardList(PLAYER::PLAYER_2);
+	show_card = poker_game->GetOpenCardList(PLAYER::PLAYER_2);
 	ShowCard(show_card);
 
 
-	switch(poker_game.CheckWinner()){
+	switch(poker_game->CheckWinner()){
 		case PLAYER::PLAYER_1:
 			cout << "Player1 Win" << endl;
 			break;
@@ -81,8 +84,9 @@ int main(void){
 			cout << "DRAW!!!!!!" << endl;
 			break;
 	}
-	poker_game.GameFinish();
+	poker_game->GameFinish();
 
+	delete poker_game;
 	DataBase::Close();
 	return 0;
 }
