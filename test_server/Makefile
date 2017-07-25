@@ -3,7 +3,7 @@ OBJECTS = $(subst .cpp,.o,$(FILES))
 TARGETS = $(subst .cpp,,$(FILES))
 
 CPP = g++
-LIBRARY = -lonepokerdb -lonepokergamedata -lonepokerutil -lonepokerserver
+LIBRARY = -lonepokerdb -lonepokergamedata -lonepokerserver -lonepokerutil
 
 all:$(TARGETS)
 debug: $(TARGETS)

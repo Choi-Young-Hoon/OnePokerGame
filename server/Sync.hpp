@@ -14,7 +14,7 @@ namespace CARDGAME{
 		}
 
 		inline void destroy(){
-			pthread_mutex_destory(&mutex);
+			pthread_mutex_destroy(&mutex);
 			pthread_cond_destroy(&cond);
 		}
 

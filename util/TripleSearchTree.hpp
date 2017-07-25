@@ -19,8 +19,6 @@ namespace CARDGAME{
 		inline void SetNodeType(int type){ this->node_type = type; }
 		inline int GetNodeType(){ return node_type; }
 	private:
-
-
 		class Node{
 		public:
 			Node():type(0){
