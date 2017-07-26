@@ -55,9 +55,10 @@ map<string, string> & Protocol::GetData(string & proto_data){
 		else if(data_type == DATA)
 			data += *c_data;
 		c_data++;
-		if(*c_data == ':')
+		if(*c_data == ':'){
+			c_data++;
 			data_type = DATA;
-		else if(*c_data == '\n' || *c_data == '\0'){
+		}else if(*c_data == '\n' || *c_data == '\0'){
 			if(data_type == KEY)
 				break;
 			data_type = KEY;
