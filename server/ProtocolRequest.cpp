@@ -28,7 +28,7 @@ bool ProtocolRequest::GetTypeString(string & type, string & data){
 	return false;
 }
 
-bool ProtocolRequest::parse(string & data){
+bool ProtocolRequest::parse(string data){
 	string parse_method;
 	string parse_type;
 
@@ -43,7 +43,10 @@ bool ProtocolRequest::parse(string & data){
 	if(this->type == PROTOCOL_TYPE::TYPE_ERROR)
 		return false;
 	this->data = Protocol::GetData(data);
+#ifdef ONEPOKER_DEBUG
+	cout << "파싱 데이터 출력 " << endl;
 	for(auto iter = this->data.begin(); iter != this->data.end(); iter++)
 		cout << iter->first << " " << iter->second << endl;
+#endif
 	return true;
 }

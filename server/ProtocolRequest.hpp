@@ -11,7 +11,7 @@ namespace CARDGAME{
 		ProtocolRequest(){}
 		~ProtocolRequest(){}
 
-		bool parse(string & data);
+		bool parse(string data);
 		bool GetMethodString(string & method, string & data);
 		bool GetTypeString(string & type, string & data);
 

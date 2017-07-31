@@ -112,6 +112,7 @@ namespace CARDGAME{
 		inline int WaitEvent(){
 			return WaitEvent(-1);
 		}
+		
 		inline int WaitEvent(int timeout){
 			ep_event_index = 0;
 			ep_event_count = epoll_wait(epoll_fd, ep_event, max_client_count, timeout);

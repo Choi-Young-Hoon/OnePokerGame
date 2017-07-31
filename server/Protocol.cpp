@@ -45,23 +45,29 @@ map<string, string> & Protocol::GetData(string & proto_data){
 	string key = "", data = "";
 #define KEY 10
 #define DATA 20
-#define NON 00
+#define NON 0
 	int data_type = KEY;
 
 	field_data.clear();
 	while(*c_data != '\0'){
-		if(data_type == KEY)
+		if(data_type == KEY){
+			if(*c_data == '\n')
+				c_data++;
 			key += *c_data;
+		}
 		else if(data_type == DATA)
 			data += *c_data;
+
 		c_data++;
+
 		if(*c_data == ':'){
 			c_data++;
 			data_type = DATA;
-		}else if(*c_data == '\n' || *c_data == '\0'){
+		} else if(*c_data == '\n' || *c_data == '\0') {
 			if(data_type == KEY)
 				break;
 			data_type = KEY;
+			
 			field_data.insert(make_pair(key, data));
 			key = data = "";
 		}

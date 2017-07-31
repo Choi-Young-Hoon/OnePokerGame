@@ -4,7 +4,7 @@ using namespace std;
 using namespace CARDGAME;
 
 int main(void){
-	string data = "USER_ADD REQUEST\n"
+	string data = "USER_AD REQUEST\n"
 		      "user_id:HelloWorld\n"
 		      "user_pwd:tesfsefsf";
 
@@ -13,6 +13,7 @@ int main(void){
 	if(!test.parse(data)){
 		cout << "Parse Failed" << endl;
 		Protocol::Clear();
+		return 0;
 	}
 	Protocol::Clear();
 	return 0;
