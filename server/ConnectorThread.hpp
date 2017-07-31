@@ -17,7 +17,7 @@ namespace CARDGAME{
 		~Connector(){}
 
 		//해당 스레드에서 실제로 실행될 함수
-		void run();
+		void Run();
 		
 		/*
 		 * run 함수에서 받은 요청을 파싱한후 해당 요청을
@@ -25,7 +25,7 @@ namespace CARDGAME{
 		 * @param
 		 * clientSock - 요청을한 클라이언트 소켓 디스크립터
 		 */
-		void Action(int clientSock);
+		void Action(int client_sock);
 		
 		/*
 		 * 현재 스레드의 Epoll에 디스크립터 추가.
@@ -35,7 +35,7 @@ namespace CARDGAME{
 		 * 성공시 true
 		 * 실패시 false 
 		 */
-		static bool AddClient(int sockFd);
+		static bool AddClient(int sock_fd);
 		
 		/*
 		 * 현재 스레드의 Epoll에 디스스크립터 제거.
@@ -45,19 +45,17 @@ namespace CARDGAME{
 		 * 성공시 true
 		 * 실패시 false
 		 */
-		static bool DelClient(int sockFd);
+		static bool DelClient(int sock_fd);
 		
 		
 		virtual bool Init();
 		virtual thread doWork(){
-			return thread([=](){
-						run();
-					});
+			return thread([=](){ Run(); });
 		}
 	private:
 		static Epoll epoll;
 		string parse_error_message;
-		LoginSync * loginSync;
+		LoginSync * login_sync;
 	};
 };
 #endif

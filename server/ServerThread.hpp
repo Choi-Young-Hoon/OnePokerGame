@@ -30,8 +30,8 @@ namespace CARDGAME{
 		virtual thread doWork() = 0;
 		
 		thread worker;
-		ProtocolRequest requestParsor;
-		User userDB;
+		ProtocolRequest request_parsor;
+		User user_db;
 	};
 };
 #endif

@@ -14,9 +14,9 @@ namespace CARDGAME{
 		bool ServerStart(int port);
 		void ServerStop();
 	private:
-		int serverFd;
-		Connector connectorWorker;
-		BlackIP * blackIP;		
+		int server_fd;
+		Connector connector_worker;
+		BlackIP * black_ip;		
 	};
 };
 

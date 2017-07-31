@@ -11,86 +11,86 @@ Epoll Connector::epoll;
 bool Connector::Init(){
 	if(epoll.Create(100) == -1)
 		return false;
-	loginSync = LoginSync::GetInstance();
-	if(loginSync == NULL)
+	login_sync = LoginSync::GetInstance();
+	if(login_sync == NULL)
 		return false;
 
 	parse_error_message = "PROTOCOL WRONG";
 	return true;
 }
 
-bool Connector::AddClient(int sockFd){
-	if(epoll.AddFd(sockFd) < 0)
+bool Connector::AddClient(int sock_fd){
+	if(epoll.AddFd(sock_fd) < 0)
 		return false;
 	return true;
 }
 
-bool Connector::DelClient(int sockFd){
-	if(epoll.DelFd(sockFd) < 0)
+bool Connector::DelClient(int sock_fd){
+	if(epoll.DelFd(sock_fd) < 0)
 		return false;
 	return true;
 }
 
-void Connector::Action(int clientSock){
-	map<string, string> & data = ServerThread::requestParsor.GetData();
-	string responseMessage = "";
-	UserData userData;
+void Connector::Action(int client_sock){
+	map<string, string> & data = ServerThread::request_parsor.GetData();
+	string response_message = "";
+	UserData user_data;
 
-	switch(ServerThread::requestParsor.GetMethod()){
+	switch(ServerThread::request_parsor.GetMethod()){
 		case USER_LOGIN: //로그인 처리.
 #ifdef ONEPOKER_DEBUG
 			cout << "USER_LOGIN 요청 처리중" << endl;
 			cout << "받은 데이터 : " << data["user_id"] << " " << data["user_pwd"] << endl;
 #endif
-			if(ServerThread::userDB.Search(data["user_id"],
-						data["user_pwd"], &userData)){ //Success
+			if(ServerThread::user_db.Search(data["user_id"],
+						data["user_pwd"], &user_data)){ //Success
 #ifdef ONEPOKER_DEBUG
 				cout << "USER 계정 인증 성공" << endl;
 #endif
-				if(userData.IsCert()){
+				if(user_data.IsCert()){
 #ifdef ONEPOKER_DEBUG
 					cout << "이메일 인증된 계정" << endl;
 #endif
-					responseMessage = "USER_LOGIN SUCCESS\n";
-					responseMessage+= "user_id:" + userData.GetId() + "\n";
+					response_message = "USER_LOGIN SUCCESS\n";
+					response_message+= "user_id:" + user_data.GetId() + "\n";
 				} else {
 #ifdef ONEPOKER_DEBUG
 					cout << "이메일 인증이 안된 계정" << endl;
 #endif
-					responseMessage = "USER_LOGIN FAILED\n";
-					responseMessage+= "reason:emailcert";
+					response_message = "USER_LOGIN FAILED\n";
+					response_message+= "reason:emailcert";
 				}
 			} else {//Failed
-				responseMessage = "USER_LOGIN FAILED";	
+				response_message = "USER_LOGIN FAILED";	
 			}
 			break;
 		case USER_ADD: //가입 처리
 #ifdef ONEPOKER_DEBUG
 			cout << "가입 요청 처리" << endl;
 #endif
-			if(ServerThread::userDB.Insert(data["user_id"], 
+			if(ServerThread::user_db.Insert(data["user_id"], 
 						data["user_pwd"], data["user_email"])){ //Success
 #ifdef ONEPOKER_DEBUG
 				cout << "가입 요청 처리 성공" << endl;
 #endif
-				responseMessage = "USER_ADD SUCCESS\n";
-				responseMessage += "user_email:" + data["user_email"];
+				response_message = "USER_ADD SUCCESS\n";
+				response_message += "user_email:" + data["user_email"];
 			} else  {//Failed
 #ifdef ONEPOKER_DEBUG
 				cout << "가입 실패" << endl;
 #endif
-				responseMessage = "USER_ADD FAILED";
+				response_message = "USER_ADD FAILED";
 			}
 			break;
 	//	case USER_EMAIL_CERT: //유저 이메일 인증 처리
 	//		break;
 		default:
-			responseMessage = parse_error_message;
+			response_message = parse_error_message;
 	}
-	send(clientSock, responseMessage.c_str(), responseMessage.length(), 0);
+	send(client_sock, response_message.c_str(), response_message.length(), 0);
 }
 
-void Connector::run(){
+void Connector::Run(){
 	int event_fd = 0, recv_size = 0;
 	char recv_buf[2048] = {0,};
 	
@@ -106,7 +106,7 @@ void Connector::run(){
 				cout << "받은 데이터" << endl;
 				cout << recv_buf << endl;
 #endif
-				if(!ServerThread::requestParsor.parse(recv_buf)){ //Protocol Error
+				if(!ServerThread::request_parsor.parse(recv_buf)){ //Protocol Error
 					send(event_fd, parse_error_message.c_str(), 
 							parse_error_message.length(), 0); 
 					continue;
