@@ -3,6 +3,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include <cstring>
 
 #include <iostream>
 #include <string>
@@ -13,7 +14,7 @@ void RecvFunc(int sock){
 	char buf[1024] = {0,};
 
 	while(1){
-
+		memset(buf, 0x00, 1024);
 		recv(sock, buf,1024, 0);
 		cout << "RECV=====================" << endl;
 		cout << buf << endl;
@@ -50,7 +51,7 @@ int main(void){
 			close(sockFd);
 			return -1;
 		}
-		sleep(4);
+		sleep(3);
 	}
 	
 	tt.join();

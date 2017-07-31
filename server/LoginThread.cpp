@@ -29,18 +29,26 @@ void LoginThread::Run(){
 	while(true){
 #ifdef ONEPOKER_DEBUG
 		cout << "LoginThread Event wait" << endl;
+		cout << "LoginQueue Count : " << login_queue.GetNodeCount() << endl;
 #endif
 		client_data.clear();
 		//이벤트 대기
-		while(login_queue.GetNodeCount() == 0)
+		while(login_queue.GetNodeCount() == 0){
+#ifdef ONEPOKER_DEBUG
+			cout << "Cond Wait()" << endl;
+#endif
 			login_sync->wait();
-
+		}
+		login_sync->unlock();
 		client_sock = login_queue.GetFirstData();
 		client_data = login_queue.GetSecondData();
 		if(!login_queue.DelFrontNode()){
 			cout << "LoginThread DelFrontNode() failed" << endl;
 			exit(1);
 		}
+#ifdef ONEPOKER_DEBUG
+		cout << "LoginThread GetData finish" << endl;
+#endif
 		//차단된 유저인지 확인.
 		if(black_user->Search(client_data["user_id"])){
 			if(!Connector::AddClient(client_sock))
@@ -49,7 +57,9 @@ void LoginThread::Run(){
 				send(client_sock, block_messaeg.c_str(), block_messaeg.length(), 0);
 			continue;
 		}
-
+#ifdef ONEPOKER_DEBUG
+		cout << "차단된 유저 아님 : " << client_data["user_id"] << endl;
+#endif
 		//로그인 작업 처리.
 		if(ServerThread::user_db.Search(client_data["user_id"], client_data["user_pwd"], &user_data)){
 #ifdef ONEPOKER_DEBUG
@@ -78,13 +88,20 @@ void LoginThread::Run(){
 				close(client_sock);
 			}
 		}
-		send(client_sock, response_message.c_str(), response_message.length(), 0);
+#ifdef ONEPOKER_DEBUG
+		cout << "Login Thread 결과 전송" << endl;
+#endif
+		if(send(client_sock, response_message.c_str(), response_message.length(), 0) == -1){
+			cout << "LoginThread send() failed" << endl;
+		}
+
 	}//while
 }
 
 bool LoginThread::AddQueue(int sock_fd, map<string, string> data){
 	if(!login_queue.AddNode(sock_fd, data))
 		return false;
+	//@TODO Error!!!!! 
 //	login_sync->signal();
 	LoginSync::GetInstance()->signal();
 	return true;
