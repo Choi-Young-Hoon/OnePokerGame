@@ -42,14 +42,17 @@ int main(void){
 		cout << "Connect Failed "<< endl;
 		return -1;
 	}
-	
-	if(send(sockFd, sendData.c_str(), sendData.length(), 0) == -1){
-		cout << "Send() Failed" << endl;
-		close(sockFd);
-		return -1;
+
+	thread tt(RecvFunc, sockFd);
+	for(int i = 0; i < 2; i++){
+		if(send(sockFd, sendData.c_str(), sendData.length(), 0) == -1){
+			cout << "Send() Failed" << endl;
+			close(sockFd);
+			return -1;
+		}
+		sleep(4);
 	}
 	
-	thread tt(RecvFunc, sockFd);
 	tt.join();
 
 	close(sockFd);

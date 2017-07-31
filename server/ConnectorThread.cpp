@@ -1,4 +1,5 @@
 #include "server/ConnectorThread.hpp"
+#include "server/LoginThread.hpp"
 using namespace CARDGAME;
 
 #include <string>
@@ -39,30 +40,28 @@ void Connector::Action(int client_sock){
 	switch(ServerThread::request_parsor.GetMethod()){
 		case USER_LOGIN: //로그인 처리.
 #ifdef ONEPOKER_DEBUG
-			cout << "USER_LOGIN 요청 처리중" << endl;
-			cout << "받은 데이터 : " << data["user_id"] << " " << data["user_pwd"] << endl;
+			cout << "로그인 요청 LoginThread로 넘김" << endl;
 #endif
-			if(ServerThread::user_db.Search(data["user_id"],
-						data["user_pwd"], &user_data)){ //Success
+			//현재 Connector 스레드에서 해당 소켓 을제거.
+			if(!DelClient(client_sock)){
 #ifdef ONEPOKER_DEBUG
-				cout << "USER 계정 인증 성공" << endl;
+				cout << "ConnectorThread DelClient() Failed" << endl;
 #endif
-				if(user_data.IsCert()){
-#ifdef ONEPOKER_DEBUG
-					cout << "이메일 인증된 계정" << endl;
-#endif
-					response_message = "USER_LOGIN SUCCESS\n";
-					response_message+= "user_id:" + user_data.GetId() + "\n";
-				} else {
-#ifdef ONEPOKER_DEBUG
-					cout << "이메일 인증이 안된 계정" << endl;
-#endif
-					response_message = "USER_LOGIN FAILED\n";
-					response_message+= "reason:emailcert";
-				}
-			} else {//Failed
-				response_message = "USER_LOGIN FAILED";	
+				close(client_sock);
+				response_message = "SERVER ERROR";
+				break;
 			}
+
+			//로그인 큐에 추가.
+			if(!LoginThread::AddQueue(client_sock, data)){
+#ifdef ONEPOKER_DEBUG
+				cout << "AddQueue() Failed" << endl;
+#endif
+				response_message = "SERVER ERROR";
+				break;
+			}
+
+			response_message = "LOGIN START";
 			break;
 		case USER_ADD: //가입 처리
 #ifdef ONEPOKER_DEBUG

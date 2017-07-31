@@ -83,8 +83,8 @@ namespace CARDGAME {
 				next = NULL;
 			}
 			~LinkNode() {}
-			inline void SetVal_1(TYPE1 val){ val_1 = val; }
-			inline void SetVal_2(TYPE2 val){ val_2 = val; }
+			inline void SetVal_1(TYPE1 val){ this->val_1 = val; }
+			inline void SetVal_2(TYPE2 val){ this->val_2 = val; }
 			inline TYPE1 GetVal_1(){ return val_1; }
 			inline TYPE2 GetVal_2(){ return val_2; }
 			

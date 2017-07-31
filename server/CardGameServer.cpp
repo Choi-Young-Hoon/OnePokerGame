@@ -19,11 +19,17 @@ bool CardGameServer::Init(){
 	cout << "CardGameServer Initialize()" << endl;
 #endif
 	Protocol::InitProtocolData();
+
+	//Singleton Initialize
 	black_ip = BlackIP::GetInstance();
+	LoginSync::GetInstance()->init();
+	MatchSync::GetInstance()->init();
+
 	if(DataBase::Connect("127.0.0.1", "root", "950214")
 			    == OP_ERROR_FLAG::DB_CONNECT_ERROR)
 		return false;
-	if(!connector_worker.Init())
+	if(!connector_worker.Init() ||
+	   !login_worker.Init())
 		return false;
 
 	return true;
@@ -31,6 +37,7 @@ bool CardGameServer::Init(){
 
 void CardGameServer::StartServerThread(){
 	connector_worker.start();
+	login_worker.start();
 }
 
 bool CardGameServer::ServerStart(int port){
@@ -95,9 +102,14 @@ void CardGameServer::ServerStop(){
 	cout << "Server Stop()!" << endl;
 #endif
 	connector_worker.stop();
+	login_worker.stop();
 	close(server_fd);
 	Protocol::Clear();
 	DataBase::Close();
+
+	//Singleton Destroy
+	LoginSync::GetInstance()->destroy();
+	MatchSync::GetInstance()->destroy();
 }
 
 

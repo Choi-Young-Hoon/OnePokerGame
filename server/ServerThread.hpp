@@ -28,10 +28,11 @@ namespace CARDGAME{
 
 		virtual bool Init() = 0;
 		virtual thread doWork() = 0;
-		
-		thread worker;
+
 		ProtocolRequest request_parsor;
 		User user_db;
+	private:
+		thread worker;
 	};
 };
 #endif
