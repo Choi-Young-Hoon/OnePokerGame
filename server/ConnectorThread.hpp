@@ -3,6 +3,7 @@
 #include "server/ServerThread.hpp"
 #include "server/Epoll.hpp"
 #include "server/Sync.hpp"
+#include "util/ServerSocket.hpp"
 #include <thread>
 using namespace std;
 
@@ -25,7 +26,7 @@ namespace CARDGAME{
 		 * @param
 		 * clientSock - 요청을한 클라이언트 소켓 디스크립터
 		 */
-		void Action(int client_sock);
+		void Action(Socket & client_sock);
 		
 		/*
 		 * 현재 스레드의 Epoll에 디스크립터 추가.

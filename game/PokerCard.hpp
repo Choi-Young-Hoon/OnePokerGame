@@ -7,7 +7,6 @@ namespace CARDGAME{
 	public:
 		PokerCard(): is_open(false) {
 			type = CARD_TYPE::CARD_NON_TYPE;
-			win_card = name = CARD::CARD_NON;
 		}
 		~PokerCard(){}
 		

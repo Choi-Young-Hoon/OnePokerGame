@@ -1,12 +1,16 @@
 #ifndef __ONEPOKER_SERVER_WAITINGTHREAD_HEADER__
 #define __ONEPOKER_SERVER_WAITINGTHREAD_HEADER__
+#include "server/ServerThread.hpp"
 #include "server/ConnectorThread.hpp"
 #include "server/Epoll.hpp"
 #include "server/Sync.hpp"
+#include "game/PokerUser.hpp"
+
 #include <map>
+using namespace std;
 
 namespace CARDGAME {
-	class WaitingThread : public ConnectorThread {
+	class WaitingThread : public ServerThread {
 	public:
 		WaitingThread(){}
 		~WaitingThread(){}
@@ -35,6 +39,13 @@ namespace CARDGAME {
 		//해당 스레드에서 실행될 함수.
 		void Run();
 
+		/*
+		 * 받은 Protocol Data 에 대해 처리 작업 수행
+		 * @param
+		 * client_sock  -  클라이언트 소켓
+		 */
+		void Action(Socket & client_sock);
+		
 		virtual bool Init();
 		virtual thread doWork(){
 			return thread([=](){ Run(); });

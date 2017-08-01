@@ -30,7 +30,7 @@ namespace CARDGAME{
 
 		// Getter //////////////////////////////////////////
 		inline int GetNum(){ return user_num; }
-		inline string & GetId(){ return user_email; }
+		inline string & GetId(){ return user_id; }
 		inline string & GetPwd(){ return user_pwd; }
 		inline string & GetEmail(){ return user_email; }
 		inline string & GetAccessDate(){ return user_recent_access_date; }

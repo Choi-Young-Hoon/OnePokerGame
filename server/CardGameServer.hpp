@@ -3,6 +3,8 @@
 #include "server/ConnectorThread.hpp"
 #include "server/LoginThread.hpp"
 #include "server/Sync.hpp"
+#include "server/WaitingThread.hpp"
+
 #include "db/BlackList.hpp"
 
 namespace CARDGAME{
@@ -19,6 +21,7 @@ namespace CARDGAME{
 		int server_fd;
 		Connector connector_worker;
 		LoginThread login_worker;
+		WaitingThread waiting_worker;
 		BlackIP * black_ip;		
 	};
 };

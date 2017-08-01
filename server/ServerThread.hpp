@@ -1,7 +1,9 @@
 #ifndef __ONEPOKER_SERVER_SERVERTHRED_HEADAER__
 #define __ONEPOKER_SERVER_SERVERTHRED_HEADAER__
 #include "server/ProtocolRequest.hpp"
+#include "util/ServerSocket.hpp"
 #include "db/User.hpp"
+
 #include <pthread.h>
 #include <thread>
 #include <string>

@@ -1,5 +1,7 @@
 #ifndef __ONEPOKER_SERVER_EPOLL_HEADER__
 #define __ONEPOKER_SERVER_EPOLL_HEADER__
+#include "util/ServerSocket.hpp"
+
 #include <cstdlib>
 #include <sys/epoll.h>
 #include <sys/socket.h>

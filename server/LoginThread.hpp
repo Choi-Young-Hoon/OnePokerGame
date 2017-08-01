@@ -4,6 +4,7 @@
 #include "server/Sync.hpp"
 #include "db/BlackList.hpp"
 #include "util/LinkList.hpp"
+#include "util/ServerSocket.hpp"
 
 #include <string>
 #include <map>
