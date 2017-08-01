@@ -23,20 +23,43 @@ bool WaitingThread::Init(){
 	return true;
 }
 
-bool WaitingThread::AddClient(int sock_fd, PokerUser & poker_user){
-	if(epoll.AddFd(sock_fd) < 0)
-		return false;
+/*
+ * 유저에게 해당 유저의 정보를 보낸다.
+ * @param
+ * user_sock - 유저 소켓
+ * user_data - 유저의 데이터.
+ * @return
+ * 성공시 - true
+ * 실패시 - false
+ */
+static bool SendUserInfo(Socket & user_sock, UserData * user_data){
 	string send_info = "";
-	UserData * user_data = poker_user.GetUserData();
-	Socket sock;
-	sock.SetSockFd(sock_fd);
-	user_map.insert(make_pair(sock_fd, poker_user));
+
 	send_info = "USER_INFO\n";
 	send_info+= "user_id:" + user_data->GetId() + "\n";
 	send_info+= "user_money:" + to_string(user_data->GetMoney()) + "\n";
 	send_info+= "user_win:" + to_string(user_data->GetWin()) + "\n";
 	send_info+= "user_lose:" + to_string(user_data->GetLose());
-	sock.Write(send_info.c_str(), send_info.length());
+	
+	if(user_sock.Write(send_info.c_str(), send_info.length()) == -1)
+		return false;
+	return true;
+}
+
+bool WaitingThread::AddClient(int sock_fd, PokerUser & poker_user){
+	if(epoll.AddFd(sock_fd) < 0)
+		return false;
+	
+	string send_info = "";
+	UserData * user_data = poker_user.GetUserData();
+	Socket sock(sock_fd);
+	
+	user_map.insert(make_pair(sock_fd, poker_user));
+	if(!SendUserInfo(sock, user_data)){
+		DelClient(sock.GetSockFd());
+		close(sock.GetSockFd());
+		return false;
+	}
 	return true;
 }
 
@@ -63,6 +86,14 @@ void WaitingThread::Action(Socket & client_sock){
 				break;
 			}
 			break;
+		case PROTOCOL_METHOD::USER_CERT:	//자신의 정보 요청
+			if(!SendUserInfo(client_sock, 
+					user_map[client_sock.GetSockFd()].GetUserData())){
+				DelClient(client_sock.GetSockFd());
+				client_sock.Close();
+				return;
+			}
+				break;
 		default:
 			response_message = "PROTOCOL ERROR";
 	}

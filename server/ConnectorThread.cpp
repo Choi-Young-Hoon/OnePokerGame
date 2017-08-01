@@ -82,7 +82,7 @@ void Connector::Action(Socket & client_sock){
 				response_message = "USER_ADD FAILED";
 			}
 			break;
-	//	case USER_EMAIL_CERT: //유저 이메일 인증 처리
+	//	case USER_CERT: //유저 이메일 인증 및 비밀번호 찾기 처리
 	//		break;
 		default:
 			response_message = parse_error_message;
