@@ -1,5 +1,0 @@
-#ifndef __ONEPOKER_UTIL_EMAIL_HEADER__
-#define __ONEPOKER_UTIL_EMAIL_HEADER__
-
-
-#endif

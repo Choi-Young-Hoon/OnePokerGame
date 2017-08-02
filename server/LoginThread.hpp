@@ -5,6 +5,7 @@
 #include "db/BlackList.hpp"
 #include "util/LinkList.hpp"
 #include "util/ServerSocket.hpp"
+#include "util/SMTPClient.hpp"
 
 #include <string>
 #include <map>
@@ -38,8 +39,10 @@ namespace CARDGAME{
 		}
 	private:
 		static LinkList<int, map<string, string>> login_queue;
+		map<int, string> user_cert_key;
 		LoginSync * login_sync;
 		BlackUser * black_user;
+		SmtpClient smtp_client;
 	};
 };
 #endif

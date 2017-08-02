@@ -17,6 +17,7 @@ namespace CARDGAME{
 			user_pwd = pwd;
 			user_email = email;
 		}
+
 		inline void SetStat(int money, bool win){
 			user_money += money;
 			(win) ? user_win++ : user_lose++;
@@ -27,7 +28,9 @@ namespace CARDGAME{
 		inline void SetRecentDate(string date){
 			user_recent_access_date = date;
 		}
-
+		inline void SetEmailCert(bool cert){
+			user_email_cert = cert;
+		}
 		// Getter //////////////////////////////////////////
 		inline int GetNum(){ return user_num; }
 		inline string & GetId(){ return user_id; }

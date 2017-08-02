@@ -2,12 +2,14 @@
 #include "server/ConnectorThread.hpp"
 #include "server/WaitingThread.hpp"
 #include "game/PokerUser.hpp"
-
 #include "db/User.hpp"
 
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
+
+#include <cstdlib>
+#include <ctime>
 using namespace CARDGAME;
 
 LinkList<int, map<string, string>> LoginThread::login_queue;
@@ -21,9 +23,22 @@ bool LoginThread::Init(){
 
 	if(login_sync == NULL || black_user == NULL)
 		return false;
+	if(!smtp_client.Connect())
+		return false;
+	srand(time(NULL));
 	return true;
 }
 
+/*
+ * 이메일 인증키값 생성
+ * 10자리
+ */
+static string GetCertkey(){
+	string key = "";
+	for(int i = 0; i < 10; i++)
+		key += (char)(rand() % 'Z' + 'A');
+	return key;
+}
 void LoginThread::Run(){
 	Socket client_sock;
 	map<string, string> client_data;
@@ -69,6 +84,14 @@ void LoginThread::Run(){
 #ifdef ONEPOKER_DEBUG
 			cout << "[LoginThread] Login 인증 성공" << endl;
 #endif
+			if(client_data.find("email_cert") != client_data.end()){
+				if(client_data["email_cert"] 
+						== user_cert_key[user_data.GetNum()]){
+					user_cert_key.erase(user_cert_key.find(user_data.GetNum()));
+					ServerThread::user_db.Update(&user_data);
+					user_data.SetEmailCert(true);
+				}
+			}
 			//이메일 인증 확인.
 			if(user_data.IsCert()){
 #ifdef ONEPOKER_DEBUG
@@ -87,7 +110,15 @@ void LoginThread::Run(){
 				cout << "[LoginThread] Email 인증되지 않은 계정" << endl;
 #endif
 				response_message = "USER_LOGIN FAILED\n";
-				response_message+= "reason:emailcert";
+				response_message+= "reason:emailcert\n";
+				response_message+= "user_email:" + user_data.GetEmail();
+				
+				smtp_client.SetSubject("CardGame Cert Key");
+				smtp_client.SetSender("admin@cardgame.com");
+				smtp_client.SetReceiver(user_data.GetEmail());
+				smtp_client.SetData("Hello\nKey : " + GetCertkey());
+				smtp_client.Send();
+				
 				if(!Connector::AddClient(client_sock.GetSockFd())){
 					client_sock.Close();
 				}

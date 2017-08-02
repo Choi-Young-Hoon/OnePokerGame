@@ -13,9 +13,11 @@ Epoll Connector::epoll;
 bool Connector::Init(){
 	if(epoll.Create(100) == -1)
 		return false;
+
 	login_sync = LoginSync::GetInstance();
 	if(login_sync == NULL)
 		return false;
+	
 
 	parse_error_message = "PROTOCOL WRONG";
 	return true;

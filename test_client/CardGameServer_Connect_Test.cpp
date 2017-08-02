@@ -26,8 +26,9 @@ int main(void){
 	string sendData;
 	
 	sendData = "USER_LOGIN REQUEST\n";
-	sendData+= "user_id:eqw456\n";
-	sendData+= "user_pwd:123123";
+	sendData+= "user_id:hun5077\n";
+	sendData+= "user_pwd:123123\n";
+	sendData+= "email_cert:àçhauOÑW^ê";
 
 	addr.sin_family = PF_INET;
 	addr.sin_port = htons(30000);

@@ -11,8 +11,10 @@ int main(void){
 
 	if(!smtp.Connect())
 		return -1;
-	if(!smtp.Send())
-		return -1;
+	for(int i = 0; i < 3; i ++){
+		if(!smtp.Send())
+			return -1;
+	}
 	smtp.Close();
 	return 0;
 }
