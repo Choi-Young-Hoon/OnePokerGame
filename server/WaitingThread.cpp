@@ -74,7 +74,7 @@ bool WaitingThread::DelClient(int sock_fd){
 }
 
 void WaitingThread::Action(Socket & client_sock){
-	map<string, string> & data = ServerThread::request_parsor.GetData();
+	//map<string, string> & data = ServerThread::request_parsor.GetData();
 	string response_message = "";
 	UserData userData;
 
