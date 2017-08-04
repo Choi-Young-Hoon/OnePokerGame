@@ -14,7 +14,7 @@ namespace CARDGAME {
 
 		bool Connect();
 		bool Send();
-		bool Close();
+		void Close();
 
 
 		//Setter

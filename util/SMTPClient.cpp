@@ -23,7 +23,7 @@ bool SmtpClient::Connect(){
 	return true;
 }
 
-bool SmtpClient::Close(){
+void SmtpClient::Close(){
 	close(sock_fd);
 }
 

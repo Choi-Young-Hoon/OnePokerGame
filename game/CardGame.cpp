@@ -11,6 +11,8 @@ extern "C" CardGame * SelectGameMode(enum GAME_MODE mode){
 	switch(mode){
 		case GAME_ONEPOKER:
 			return new ONEPOKER::OnePoker();
+		default:
+			break;
 	}
 	return NULL;
 }
@@ -70,6 +72,5 @@ queue<PokerCard> CardGame::GetRandomMixDeck(vector<string> & card_list, enum CAR
 		}
 		data++;
 	}
-	
 	return RandomMix(card_deck);
 }

@@ -16,7 +16,9 @@ namespace CARDGAME{
 
 	//게임 모드.
 	enum GAME_MODE{
-		GAME_ONEPOKER = 0
+		GAME_ONEPOKER = 0,
+
+		GAME_MODE_COUNT
 	};
 	//덱 타입.
 	enum CARD_DECK{
