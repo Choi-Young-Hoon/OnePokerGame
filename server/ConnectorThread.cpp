@@ -65,6 +65,7 @@ void Connector::Action(Socket & client_sock){
 			}
 
 			response_message = "LOGIN START";
+			goto SUCCESS_EXIT;
 			break;
 		case USER_ADD: //가입 처리
 #ifdef ONEPOKER_DEBUG
@@ -90,6 +91,8 @@ void Connector::Action(Socket & client_sock){
 			response_message = parse_error_message;
 	}
 	client_sock.Write(response_message.c_str(), response_message.length());
+SUCCESS_EXIT:
+	return;
 }
 
 void Connector::Run(){

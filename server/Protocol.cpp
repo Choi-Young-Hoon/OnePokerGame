@@ -12,6 +12,7 @@ void Protocol::InitProtocolData(){
 	method_tree.Insert("MATCH", PROTOCOL_METHOD::MATCH);
 	method_tree.Insert("JOIN", PROTOCOL_METHOD::JOIN);
 	method_tree.Insert("GAME", PROTOCOL_METHOD::GAME);
+	method_tree.Insert("USER_INFO", PROTOCOL_METHOD::USER_CERT);
 
 	type_tree.Insert("REQUEST", PROTOCOL_TYPE::REQUEST);
 	type_tree.Insert("SUCCESS", PROTOCOL_TYPE::SUCCESS);

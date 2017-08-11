@@ -35,7 +35,7 @@ bool WaitingThread::Init(){
 static bool SendUserInfo(Socket & user_sock, UserData * user_data){
 	string send_info = "";
 
-	send_info = "USER_INFO\n";
+	send_info = "USER_INFO SUCCESS\n";
 	send_info+= "user_id:" + user_data->GetId() + "\n";
 	send_info+= "user_money:" + to_string(user_data->GetMoney()) + "\n";
 	send_info+= "user_win:" + to_string(user_data->GetWin()) + "\n";
@@ -55,11 +55,11 @@ bool WaitingThread::AddClient(int sock_fd, PokerUser & poker_user){
 	Socket sock(sock_fd);
 	
 	user_map.insert(make_pair(sock_fd, poker_user));
-	if(!SendUserInfo(sock, user_data)){
+	/*if(!SendUserInfo(sock, user_data)){
 		DelClient(sock.GetSockFd());
 		close(sock.GetSockFd());
 		return false;
-	}
+	}*/
 	return true;
 }
 

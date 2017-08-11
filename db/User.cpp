@@ -69,7 +69,7 @@ bool User::Update(UserData * user_info){
 	query+= "pass = '" + user_info->GetPwd() + "' ";
 	query+= ", email_cert = ";
 	query+= (user_info->IsCert()) ? "'O'" : "'X'";
-	query+= ", resent_access_date = '" + user_info->GetAccessDate() + "'";
+	//query+= ", resent_access_date = '" + user_info->GetAccessDate() + "'";
 	query+= ", money = " + to_string(user_info->GetMoney());
 	query+= ", win = " + to_string(user_info->GetWin());
 	query+= ", lose = " + to_string(user_info->GetLose());

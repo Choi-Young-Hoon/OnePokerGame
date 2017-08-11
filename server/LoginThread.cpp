@@ -36,7 +36,7 @@ bool LoginThread::Init(){
 static string GetCertkey(){
 	string key = "";
 	for(int i = 0; i < 10; i++)
-		key += (char)(rand() % 'Z' + 'A');
+		key += (char)(rand() % 26  + 'A');
 	return key;
 }
 void LoginThread::Run(){
@@ -85,13 +85,18 @@ void LoginThread::Run(){
 			cout << "[LoginThread] Login 인증 성공" << endl;
 #endif
 			if(client_data.find("email_cert") != client_data.end()){
+#ifdef ONEPOKER_DEBUG
+				cout << "[LoginThread] 이메일 인증 중 : " << client_data["email_cert"] << endl;
+#endif
 				if(client_data["email_cert"] 
 						== user_cert_key[user_data.GetNum()]){
 					user_cert_key.erase(user_cert_key.find(user_data.GetNum()));
-					ServerThread::user_db.Update(&user_data);
 					user_data.SetEmailCert(true);
+					ServerThread::user_db.Update(&user_data);
 				}
 			}
+
+
 			//이메일 인증 확인.
 			if(user_data.IsCert()){
 #ifdef ONEPOKER_DEBUG
@@ -104,7 +109,7 @@ void LoginThread::Run(){
 				}
 
 				response_message = "USER_LOGIN SUCCESS\n";
-				response_message+= "user_id:" + user_data.GetId() + "\n";
+				response_message+= "user_id:" + user_data.GetId();
 			} else {
 #ifdef ONEPOKER_DEBUG
 				cout << "[LoginThread] Email 인증되지 않은 계정" << endl;
@@ -113,11 +118,15 @@ void LoginThread::Run(){
 				response_message+= "reason:emailcert\n";
 				response_message+= "user_email:" + user_data.GetEmail();
 				
+				string certKey = GetCertkey();
+
 				smtp_client.SetSubject("CardGame Cert Key");
 				smtp_client.SetSender("admin@cardgame.com");
 				smtp_client.SetReceiver(user_data.GetEmail());
-				smtp_client.SetData("Hello\nKey : " + GetCertkey());
+				smtp_client.SetData("Hello\nKey : " + certKey);
 				smtp_client.Send();
+
+				user_cert_key.insert(make_pair(user_data.GetNum(), certKey));
 				
 				if(!Connector::AddClient(client_sock.GetSockFd())){
 					client_sock.Close();
