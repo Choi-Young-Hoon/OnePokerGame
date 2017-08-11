@@ -29,6 +29,14 @@ bool LoginThread::Init(){
 	return true;
 }
 
+void LoginThread::SendEmailRegisterKey(string email, string key){
+	smtp_client.SetSubject("CardGame Register Key");
+	smtp_client.SetSender("admin@cardgame.com");
+	smtp_client.SetReceiver(email);
+	smtp_client.SetData("Hello\nKey : " + key);
+	smtp_client.Send();
+}
+
 /*
  * 이메일 인증키값 생성
  * 10자리
@@ -119,13 +127,7 @@ void LoginThread::Run(){
 				response_message+= "user_email:" + user_data.GetEmail();
 				
 				string certKey = GetCertkey();
-
-				smtp_client.SetSubject("CardGame Cert Key");
-				smtp_client.SetSender("admin@cardgame.com");
-				smtp_client.SetReceiver(user_data.GetEmail());
-				smtp_client.SetData("Hello\nKey : " + certKey);
-				smtp_client.Send();
-
+				SendEmailRegisterKey(user_data.GetEmail(), certKey);
 				user_cert_key.insert(make_pair(user_data.GetNum(), certKey));
 				
 				if(!Connector::AddClient(client_sock.GetSockFd())){

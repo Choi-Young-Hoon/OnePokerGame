@@ -21,7 +21,11 @@ namespace CARDGAME{
 		 */
 		void Run();
 		
-
+		/*
+		 * 이메일 인증 키값을 전송한다.
+		 */
+		void SendEmailRegisterKey(string email, string key);	
+		
 		/*
 		 * 로그인 큐에 추가한다.
 		 * @param

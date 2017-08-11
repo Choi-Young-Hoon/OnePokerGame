@@ -10,7 +10,7 @@
 using namespace std;
 
 namespace CARDGAME {
-	class MatchingThread {
+	class MatchingThread : public ServerThread{
 	public:
 		MatchingThread(){}
 		~MatchingThread(){}
